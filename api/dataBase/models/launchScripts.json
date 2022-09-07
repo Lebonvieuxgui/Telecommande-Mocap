@@ -1,0 +1,62 @@
+[
+    {
+    "id":1,
+    "variables":[{"name":"$filename","value":null}],
+    "startTokens":["--takename=$filename","--start","--url=http://192.168.1.100",""],
+    "stopTokens":["--stop","--url=http://192.168.1.100"],
+    "name":"Kipro mini",
+    "executableName":"kipro",
+    "startArgs":"--takename=\"$filename\" --start --url=\"http://192.168.1.100\" ",
+    "stopArgs":"--stop --url=\"http://192.168.1.100\""
+    },
+    {
+    "id":2,
+    "variables":[{"name":"$filename","value":null},{"name":"$note","value":null},{"name":"$description","value":null}],
+    "startTokens":["--start","--name","$filename","--path","c","--note","$note","--description","$description"],
+    "stopTokens":["--stop","--name","$filename","--path","c"],
+    "name":"Vicon",
+    "executableName":"vicon",
+    "startArgs":"--start --name \"$filename\" --path \"c\" --note \"$note\" --description \"$description\"",
+    "stopArgs":"--stop --name \"$filename\" --path \"c\""
+    },
+    {
+    "id":3,
+    "variables":[{"name":"$filename","value":null}],
+    "startTokens":["start","--host=192.168.1.185"],
+    "stopTokens":["stop","$filename","","--host=192.168.1.185"],
+    "name":"Qualisys",
+    "executableName":"qualisys",
+    "startArgs":"start --host=\"192.168.1.185\"",
+    "stopArgs":"stop \"$filename\"  --host=\"192.168.1.185\""
+    },
+    {
+    "id":4,
+    "variables":[{"name":"$filename","value":null}],
+    "startTokens":["--start","--ip='192.168.185'","--port='4242'","--takename=$filename"],
+    "stopTokens":["--stop","--ip='192.168.1.185'","--port='4242'"],
+    "name":"Motionbuilder",
+    "executableName":"motionbuilder.py",
+    "startArgs":"--start --ip='192.168.185' --port='4242' --takename=\"$filename\"",
+    "stopArgs":"--stop --ip='192.168.1.185' --port='4242'"
+    },
+    {
+    "id":5,
+    "variables":[{"name":"$filename","value":null}],
+    "startTokens":["--start","--ip='192.168.1.213/192.168.1.130'","--port=8000","--takename=$filename"],
+    "stopTokens":["--stop","--ip='192.168.1.213/192.168.1.130'","--port=8000"],
+    "name":"LiveLinkFace",
+    "executableName":"livelinkface.py",
+    "startArgs":"--start --ip='192.168.1.213/192.168.1.130' --port=8000 --takename=\"$filename\"",
+    "stopArgs":"--stop --ip='192.168.1.213/192.168.1.130' --port=8000"
+    },
+    {
+    "id":6,
+    "variables":[{"name":"$filename","value":null}],
+    "startTokens":["--start","--ip='192.168.1.97'","--port='30010'","--takename=$filename","--projectname=Schirkoa"],
+    "stopTokens":["--stop","--ip='192.168.1.97'","--port='30010'","--projectname=Schirkoa"],
+    "name":"Unreal",
+    "executableName":"unreal.py",
+    "startArgs":"--start --ip='192.168.1.97' --port='30010' --takename=\"$filename\" --projectname=\"\"Schirkoa\"",
+    "stopArgs":"--stop --ip='192.168.1.97' --port='30010' --projectname=\"\"Schirkoa\""
+    }
+]

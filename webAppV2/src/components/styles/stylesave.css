@@ -1,0 +1,100 @@
+:root {
+    --color2: #B6CEB7;
+    --color1: #9DBE9F;
+    --color4: #5E8C61;
+    --color5: #007A41;
+    --color6: #3F3C53;
+    --color3: #272635;
+    --color7: #CEDECF;
+    --color8: #ECE4B7;
+    --w : #FCFAF9;
+    --r: #79031D;
+    --o : #EE6123;
+    --b : #010814;
+  
+  };
+  
+  @font-face {
+    font-family: "Title";
+    src: url("../fonts/title/Title.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: "ethno";
+    src: url("../fonts/title/ethnocentric rg.otf") format("truetype");
+  }
+  
+  
+  .el-table {
+    width: fit-content;
+  }
+  .el-main {
+    background-color: var(--b);
+    width: 95vw;
+  }
+  .el-header {
+    font-family: "ethno";
+    color: var(--b);
+    font-size: xx-large;
+    background-color: var(--o);
+    margin-top: 25px;
+  }
+  .list-card {
+    font-family: "ethno";
+    float: left;
+    display: flex;
+    justify-content: left;
+    background-color: var(--b);
+    color: var(--w);
+    margin-left: 50px;
+    width: fit-content;
+    height: fit-content;
+  }
+  .background {
+    display: flex;
+    justify-content: center;
+    background-color: var(--b);
+    border-top: 0px;
+    height: 969px;
+  }
+  .MainRemoteCard{
+    font-family: "ethno";
+    color: var(--w);
+    float: left;
+    display: flex;
+    background-color: var(--b);
+    width : 50vw;
+    height: fit-content
+  }
+  .Scripts{
+    float: left;
+    border-radius : 5px;
+    background-color: var(--b);
+  }
+  .CheckboxScripts{
+    margin-left: 10px;
+  }
+  
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color3); 
+  }
+  
+  .loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

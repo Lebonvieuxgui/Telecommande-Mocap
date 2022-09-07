@@ -1,0 +1,40 @@
+<template>
+    <el-card shadow="hover" class="list-card">list
+        <el-table ref="multipleTableRef" :data="activeScripts" @selection-change="handleSelectionChange">
+            <el-table-column type="selection" />
+            <el-table-column property="name" label="Name" width="150px" />
+            <el-table-column align="left">
+                <el-button size="small" text @click="dialogFormVisible = true, selectScript(name, activeScripts)">
+                    <el-icon>
+                        <Edit />
+                    </el-icon>
+                </el-button>
+                <el-dialog v-model="dialogFormVisible" title="Edit Script">
+                    <el-form :model="form">
+                        <el-form-item label="Script name" :label-width="formLabelWidth">
+                            <el-input v-model="form.name" type="textarea" :rows="1" autocomplete="off" />
+                        </el-form-item>
+                        <el-form-item label="Executable" :label-width="formLabelWidth">
+                            <el-select v-model="form.executable" placeholder="Please select an executable name">
+                                <el-option v-for="activeScript in activeScripts" :key="activeScript.executableName"
+                                    :value="activeScript.executableName" :label="activeScript.executableName" />
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="Start Command Line Arguments" :label-width="formLabelWidth">
+                            <el-input v-model="form.startArgs" type="textarea" :rows="1" autocomplete="off" />
+                        </el-form-item>
+                    </el-form>
+                    <el-form-item label="Stop Command Line Arguments" :label-width="formLabelWidth">
+                        <el-input v-model="form.stopArgs" type="textarea" :rows="1" autocomplete="off" />
+                    </el-form-item>
+                    <template #footer>
+                        <span class="dialog-footer">
+                            <el-button @click="dialogFormVisible = false">Cancel</el-button>
+                            <el-button type="primary" @click="dialogFormVisible = false">Confirm</el-button>
+                        </span>
+                    </template>
+                </el-dialog>
+            </el-table-column>
+        </el-table>
+    </el-card>
+</template>
