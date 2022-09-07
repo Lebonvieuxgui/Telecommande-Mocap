@@ -9,7 +9,7 @@ const update = require("./dataBase/utilities/updateFile.js");
 const execLoad = require("./dataBase/utilities/loadExecs.js");
 
 var corsOptions = {
-    origin: 'http://localhost:5173',
+    origin: 'http://localhost:29205',
     optionsSuccessStatus: 200
 }
 
@@ -19,6 +19,7 @@ app.use(express.json())
 // PROJECTS
 
 app.get('/projects', (req, res) => {
+    console.log("get")
     res.status(200).json(projects);
 });
 
@@ -30,7 +31,19 @@ app.get('/projects/:id', (req, res) => {
 
 app.post('/projects', (req,res) => {
     console.log("post");
+    req.body.id = projects.length + 1;
     projects.push(req.body);
+    update.updateFile(projects, './dataBase/data/Projects.json')
+    res.status(200).json(projects);
+});
+
+app.put('/projects/', (req, res) => {
+    for (let i = 0; i < req.body.length; i++) {
+        let id = req.body[i].id - 1;
+        projects[id] = req.body[i];
+    }
+    console.log("test");
+    update.updateFile(projects, './dataBase/data/Projects.json');
     res.status(200).json(projects);
 });
 

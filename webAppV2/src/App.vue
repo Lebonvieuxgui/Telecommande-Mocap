@@ -4,11 +4,16 @@
 
 <script>
 import Home from './components/Home.vue'
+import VueGridLayout from 'vue-grid-layout'
+import { GridItem, GridLayout } from 'vue-grid-layout'
+
 
 export default {
   name: 'App',
   components: {
     Home,
+    GridLayout: GridLayout,
+    GridItem: GridItem
   }
 }
 </script>

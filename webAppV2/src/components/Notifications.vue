@@ -22,8 +22,8 @@
             <div v-if="show" class="script-table-body">
                 <tbody style="display: flex; vertical-align: middle; position: relative;">
                     <ul>
-                        <el-alert  center show-icon type="error" effect="dark" v-for="notif in notifications">
-                            {{  notif  }}
+                        <el-alert center show-icon type="error" effect="dark" v-for="notif in notifications">
+                            {{ notif }}
                         </el-alert>
                     </ul>
                 </tbody>

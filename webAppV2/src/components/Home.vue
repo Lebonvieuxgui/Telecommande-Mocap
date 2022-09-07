@@ -2,54 +2,220 @@
   <div class="background">
     <div class="common-layout">
       <el-header class="home-header">SolidRemote
-        <div class="active-project-display" v-if="selectedProject !== null"><span
-            style="margin-left:50px; float: right; color: #79031D; font-size: 30px">{{  this.selectedProject.name 
-            }}</span></div>
+        <div class="active-project-display" v-if="selectedProject !== null">
+          <div></div>
+          <span style="
+              margin-left: 50px;
+              float: right;
+              color: #79031d;
+              font-size: 30px;
+            ">
+            {{ this.selectedProject.name }}
+          </span>
+        </div>
       </el-header>
       <el-main>
-        <div><MainRemote /></div>
-        <div><ProjectsList /></div>
-        <div><ScriptsList /></div>
-        <div><Notifications /></div>
+        <grid-layout v-model:layout="componentNames" :col-num="250" :row-height="30" :row-width="10"
+          :is-draggable="true" :is-resizable="false" :responsive="responsive" :is-mirrored="false"
+          :vertical-compact="false" :margin="[10, 10]" :use-css-transforms="true" @layout-updated="updateLayout">
+          <grid-item v-for="component in componentNames" :x="component.x" :y="component.y" :w="component.w"
+            :h="component.h" :i="component.i" :key="component.i">
+            <component v-bind:is="component.name" />
+          </grid-item>
+        </grid-layout>
+
+        <el-dialog v-model="scriptDialogFormVisible" title="Edit Script">
+          <el-form :model="form">
+            <el-form-item class="DialogScript" label="Script name" :label-width="formLabelWidth">
+              <el-input v-model="form.name" type="textarea" :rows="1" autocomplete="off" />
+            </el-form-item>
+            <el-form-item class="DialogScript" label="Executable" :label-width="formLabelWidth">
+              <el-select v-model="form.executableName" placeholder="Please select an executable name">
+                <el-option v-for="loadedExec in loadedExecs" :key="loadedExec.name" :value="loadedExec.name"
+                  :label="loadedExec.name" />
+              </el-select>
+            </el-form-item>
+            <el-form-item class="DialogScript" label="Start Command Line Arguments" :label-width="formLabelWidth">
+              <el-input v-model="form.startArgs" type="textarea" :rows="1" autocomplete="off" />
+            </el-form-item>
+          </el-form>
+          <el-form-item class="DialogScript" label="Stop Command Line Arguments" :label-width="formLabelWidth">
+            <el-input v-model="form.stopArgs" type="textarea" :rows="1" autocomplete="off" />
+          </el-form-item>
+          <template #footer>
+            <span class="dialog-footer">
+              <el-button @click="scriptDialogFormVisible = false">Cancel</el-button>
+              <el-button type="primary" @click="(scriptDialogFormVisible = false), postChanges()">
+                Confirm
+              </el-button>
+            </span>
+          </template>
+        </el-dialog>
+
+        <el-dialog v-model="newProjectFormVisible" title="New Project">
+          <el-form :model="projectForm">
+            <el-form-item class="DialogScript" label="Project name" :label-width="formLabelWidth">
+              <el-input v-model="projectForm.name" type="textarea" :rows="1" placeholder="Enter Project Name" autocomplete="off" />
+            </el-form-item>
+            <el-form-item class="DialogScript" label="Current Index" :label-width="formLabelWidth">
+              <el-input-number v-model="projectForm.currentIndex" placeholder="0" :min="0" :max="99999" />
+            </el-form-item>
+            <el-form-item class="DialogScript" label="Current Project" :label-width="formLabelWidth">
+              <el-checkbox v-model="projectForm.current" label="Active" />
+            </el-form-item>
+          </el-form>
+          <template #footer>
+            <span class="dialog-footer">
+              <el-button @click="newProjectFormVisible = false">Cancel</el-button>
+              <el-button type="primary" @click="(newProjectFormVisible = false), addNewProject()">
+                Confirm
+              </el-button>
+            </span>
+          </template>
+        </el-dialog>
       </el-main>
     </div>
   </div>
 </template>
 
 <script>
-import Overlay from 'vuejs-overlay';
+import { reactive, ref } from "vue";
+import Overlay from "vuejs-overlay";
 import ScriptsList from "./ScriptsList.vue";
 import MainRemote from "./MainRemote.vue";
 import ProjectsList from "./ProjectsList.vue";
 import Notifications from "./Notifications.vue";
-import drag from "v-drag"
+import drag from "v-drag";
+import VueGridLayout from "vue-grid-layout";
+import { GridItem, GridLayout } from "vue-grid-layout";
 
+let form = reactive({
+  name: "",
+  executableName: "",
+  startArgs: "",
+  stopArgs: "",
+});
+
+let projectForm = reactive({
+  id: "",
+  name: "",
+  currentIndex: "0",
+  current: false,
+});
+
+const newProjectFormVisible = ref(false);
+const scriptDialogFormVisible = ref(false);
+const formLabelWidth = "140px";
 
 export default {
   name: "SolidRemoteHome",
+  components: {
+    GridLayout: VueGridLayout.GridLayout,
+    GridItem: VueGridLayout.GridItem,
+    ScriptsList: ScriptsList,
+    ProjectsList: ProjectsList,
+    Notifications: Notifications,
+    MainRemote: MainRemote,
+  },
+  created() {
+    this.emitter.on("updateActiveProject", (evt) => {
+      this.selectedProject = evt;
+    });
+    this.emitter.on("openEditScript", (evt) => {
+      console.log(evt);
+      this.openFileDialog(evt);
+    });
+    this.emitter.on("openNewProjectForm", () => {
+      this.newProjectFormVisible = true;
+    });
+  },
   data() {
     return {
+      componentNames: [
+        { name: "MainRemote", x: 0, y: 0, w: 137, h: 8.7, i: "0", },
+        { name: "ProjectsList", x: 140, y: 0, w: 48, h: 4, i: "1", },
+        { name: "ScriptsList", x: 175, y: 0, w: 42, h: 8, i: "2", },
+        { name: "Notifications", x: 140, y: 4, w: 33, h: 8, i: "3", },
+      ],
       activeProjects: [],
       selectedProject: null,
-    }
+      scriptDialogFormVisible,
+      form,
+      projectForm,
+      newProjectFormVisible,
+      formLabelWidth,
+      loadedExecs: [],
+      activeScripts: []
+    };
   },
   async mounted() {
     let self = this;
-
-    const data = await fetch("http://localhost:3000/projects");
-    const newData = await data.json();
-    this.activeProjects = newData;
+    const projectData = await fetch("http://localhost:3000/projects");
+    const newProjectData = await projectData.json();
+    this.activeProjects = newProjectData;
     for (let i = 0; i < this.activeProjects.length; i++) {
       if (this.activeProjects[i].current === true) {
         this.selectedProject = this.activeProjects[i];
       }
     }
-  }
-}
+    const data = await fetch("http://localhost:3000/scripts");
+    const newData = await data.json();
+    this.activeScripts = newData;
+    const execData = await fetch("http://localhost:3000/execs");
+    const newExecData = await execData.json();
+    this.loadedExecs = newExecData;
+  },
+  methods: {
+    addNewProject() {
+      if (this.projectForm.current === true) {
+        this.emitter.emit("refreshProjects", this.projectForm);
+        return;
+      }
+      let requestOptions = {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "*/*",
+          "Connection": "keep-alive"
+        },
+        body: JSON.stringify(this.projectForm)
+      };
+      fetch('http://localhost:3000/projects/', requestOptions);
+      this.emitter.emit("refreshProjects", this.projectForm);
 
+    },
+    openFileDialog(evt) {
+      this.scriptDialogFormVisible = true;
+      this.form.name = evt.name;
+      this.form.executableName = evt.executableName;
+      this.form.startArgs = evt.startArgs;
+      this.form.stopArgs = evt.stopArgs;
+      if (this.form.name === null) {
+        form = {
+          name: undefined,
+          executableName: undefined,
+          startArgs: undefined,
+          stopArgs: undefined,
+        };
+      }
+    },
+    async refreshProject() {
+      const data = await fetch("http://localhost:3000/projects");
+      const newData = await data.json();
+      this.activeProjects = newData;
+      for (let i = 0; i < this.activeProjects.length; i++) {
+        if (this.activeProjects[i].current === true) {
+          this.selectedProject = this.activeProjects[i];
+          this.$globalActiveProject = this.selectedProject;
+        }
+      }
+      console.log(this.selectedProject);
+      return this.selectedProject;
+    },
+  },
+};
 </script>
 
 <style>
-@import "./styles/style.css"
+@import "./styles/style.css";
 </style>
-
