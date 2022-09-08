@@ -1,32 +1,28 @@
 :root {
-  --color2: #B6CEB7;
-  --color1: #9DBE9F;
-  --color4: #5E8C61;
-  --color5: #007A41;
-  --color6: #3F3C53;
+  --color2: #b6ceb7;
+  --color1: #9dbe9f;
+  --color4: #5e8c61;
+  --color5: #007a41;
+  --color6: #3f3c53;
   --color3: #272635;
-  --color7: #CEDECF;
-  --color8: #ECE4B7;
-  --w: #FCFAF9;
-  --r: #79031D;
-  --o: #EE6123;
+  --color7: #cedecf;
+  --color8: #ece4b7;
+  --w: #fcfaf9;
+  --r: #79031d;
+  --o: #ee6123;
   --b: #010814;
   --g: #303030;
-
 }
-
-;
 
 @font-face {
   font-family: "Text";
-  src: url('../fonts/ethnocentric-rg.ttf') format("truetype");
+  src: url("../fonts/ethnocentric-rg.ttf") format("truetype");
 }
 
 @font-face {
   font-family: "ethno";
-  src: url('../fonts/conthrax-sb.ttf') format("truetype");
+  src: url("../fonts/conthrax-sb.ttf") format("truetype");
 }
-
 
 .el-table {
   width: fit-content;
@@ -68,12 +64,10 @@
   height: fit-content;
 }
 
-
 .background {
   border-radius: 30px;
   background: var(--g);
-  box-shadow: 7px 7px 14px #1a1a1a,
-    -7px -7px 14px #464646;
+  box-shadow: 7px 7px 14px #1a1a1a, -7px -7px 14px #464646;
   display: flex;
   justify-content: center;
   background-color: var(--g);
@@ -90,14 +84,13 @@
   font-family: "ethno";
   color: var(--w);
   float: left;
-  width: 50vw;
-  height: 35vh;
+  width: fit-content;
+  height: fit-content;
 }
 
-.record-button{
-  position: relative;
-  top: 10px;
-  left: 10px;
+b {
+  width: fit-content;
+  height: fit-content;
 }
 
 a {
@@ -108,7 +101,7 @@ a {
 }
 
 a span {
-  margin-top : 5px;
+  margin-top: 5px;
   position: absolute;
   color: #fff;
   font-size: 30px;
@@ -122,8 +115,8 @@ a .liquid1 {
   width: 100px;
   height: 100px;
   background: #b30023;
-  box-shadow: inset 0 0 25px rgba(0, 0, 0, .5);
-  transition: .5s;
+  box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.5);
+  transition: 0.5s;
 }
 
 a .liquid2 {
@@ -133,13 +126,13 @@ a .liquid2 {
   width: 100px;
   height: 100px;
   background: #4973ff;
-  box-shadow: inset 0 0 25px rgba(0, 0, 0, .5);
-  transition: .5s;
+  box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.5);
+  transition: 0.5s;
 }
 
 a .liquid2::after,
 a .liquid2::before {
-  content: '';
+  content: "";
   width: 200%;
   height: 200%;
   position: absolute;
@@ -150,27 +143,25 @@ a .liquid2::before {
 }
 
 a .liquid2::before {
-  
   border-radius: 45%;
   background: rgba(20, 20, 20, 1);
   animation: animate 5s linear infinite;
 }
 
 a .liquid2::after {
-  
   border-radius: 40%;
-  background: rgba(20, 20, 20, .5);
+  background: rgba(20, 20, 20, 0.5);
   animation: animate 10s linear infinite;
 }
 
-a:hover .liquid2{
+a:hover .liquid2 {
   top: -60px;
-  background: #EE6123;;
+  background: #ee6123;
 }
 
 a .liquid1::after,
 a .liquid1::before {
-  content: '';
+  content: "";
   width: 200%;
   height: 200%;
   position: absolute;
@@ -181,22 +172,20 @@ a .liquid1::before {
 }
 
 a .liquid1::before {
-  
   border-radius: 45%;
   background: rgba(20, 20, 20, 1);
   animation: animate 5s linear infinite;
 }
 
 a .liquid1::after {
-  
   border-radius: 40%;
-  background: rgba(20, 20, 20, .5);
+  background: rgba(20, 20, 20, 0.5);
   animation: animate 10s linear infinite;
 }
 
-a:hover .liquid1{
+a:hover .liquid1 {
   top: -60px;
-  background: #EE6123;;
+  background: #ee6123;
 }
 
 @keyframes animate {
@@ -210,11 +199,7 @@ a:hover .liquid1{
 
 .Scripts {
   float: right;
-  border-radius: 5px;;
-}
-
-.DialogScript {
-  font-family: "Text";
+  border-radius: 5px;
 }
 
 .CheckboxScripts {
@@ -241,24 +226,22 @@ a:hover .liquid1{
   margin-top: 1vh;
   border-radius: 10px;
   background: var(--g);
-  box-shadow: inset 5px 5px 10px #2a2a2a,
-    inset -5px -5px 10px #363636;
+  box-shadow: inset 5px 5px 10px #2a2a2a, inset -5px -5px 10px #363636;
 }
 
 .sequence-group {
   display: flex;
+  justify-content: center;
   border-radius: 10px;
   background: var(--g);
-  box-shadow: inset 5px 5px 10px #2a2a2a,
-    inset -5px -5px 10px #363636;
+  box-shadow: inset 5px 5px 10px #2a2a2a, inset -5px -5px 10px #363636;
 }
 
 .script-table-head {
   padding: 50px;
   border-radius: 10px;
   background: linear-gradient(145deg, #333333, #2b2b2b);
-  box-shadow: 5px 5px 10px #2a2a2a,
-    -5px -5px 10px #363636;
+  box-shadow: 5px 5px 10px #2a2a2a, -5px -5px 10px #363636;
 }
 
 .script-table-body {
@@ -270,8 +253,7 @@ a:hover .liquid1{
   margin-bottom: 0px;
   border-radius: 10px;
   background: linear-gradient(145deg, #333333, #2b2b2b);
-  box-shadow: 5px 5px 10px #2a2a2a,
-    -5px -5px 10px #363636;
+  box-shadow: 5px 5px 10px #2a2a2a, -5px -5px 10px #363636;
 }
 
 * {
@@ -284,7 +266,7 @@ body {
   background: #0c0c0c;
 }
 
-.form-card{
+.form-card {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -294,8 +276,7 @@ body {
   padding: 50px;
   border-radius: 10px;
   background: linear-gradient(145deg, #333333, #2b2b2b);
-  box-shadow: 5px 5px 10px #2a2a2a,
-    -5px -5px 10px #363636;
+  box-shadow: 5px 5px 10px #2a2a2a, -5px -5px 10px #363636;
 }
 
 .project-table-body {
@@ -303,6 +284,29 @@ body {
   margin-top: 10px;
 }
 
+.record-button {
+  margin-right: 3vw;
+  margin-top: 1vw;
+}
+
+.not-recording {
+  font-size: 30px;
+  border-radius: 10px;
+  background: #a30023;
+  box-shadow: inset 5px 5px 10px #7a001a, inset -5px -5px 10px #cc002c;
+  border-color: transparent;
+  height: fit-content;
+  width: fit-content;
+}
+.recording {
+  border-radius: 10px;
+  font-size: 30px;
+  background: #303030;
+  box-shadow: inset 5px 5px 10px #242424, inset -5px -5px 10px #3c3c3c;
+  border-color: transparent;
+  height: fit-content;
+  width: fit-content;
+}
 .add-project-btn {
   height: 1vw;
   width: 1vw;
@@ -313,7 +317,6 @@ body {
 .add-project-btn:active {
   background-color: var(--g);
 }
-
 
 .project-table {
   width: 15vw;

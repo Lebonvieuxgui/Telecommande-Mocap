@@ -15,9 +15,9 @@
         </div>
       </el-header>
       <el-main>
-        <grid-layout v-model:layout="componentNames" :col-num="250" :row-height="30" :row-width="10"
-          :is-draggable="true" :is-resizable="false" :responsive="responsive" :is-mirrored="false" 
-          :vertical-compact="false" :margin="[10, 10]" :use-css-transforms="true" @layout-updated="updateLayout" :autoSize="true">
+        <grid-layout v-model:layout.sync="componentNames" :col-num="250" :row-height="30" :row-width="10"
+          :is-draggable="true" :is-resizable="true" :responsive="false" :is-mirrored="false" :vertical-compact="false"
+          :margin="[10, 10]" :use-css-transforms="true" :autoSize="true">
           <grid-item v-for="component in componentNames" :x="component.x" :y="component.y" :w="component.w"
             :h="component.h" :i="component.i" :key="component.i">
             <component v-bind:is="component.name" />
@@ -26,20 +26,20 @@
 
         <el-dialog v-model="scriptDialogFormVisible" title="Edit Script">
           <el-form :model="form">
-            <el-form-item class="DialogScript" label="Script name" :label-width="formLabelWidth">
+            <el-form-item label="Script name" :label-width="formLabelWidth">
               <el-input v-model="form.name" type="textarea" :rows="1" autocomplete="off" />
             </el-form-item>
-            <el-form-item class="DialogScript" label="Executable" :label-width="formLabelWidth">
+            <el-form-item label="Executable" :label-width="formLabelWidth">
               <el-select v-model="form.executableName" placeholder="Please select an executable name">
                 <el-option v-for="loadedExec in loadedExecs" :key="loadedExec.name" :value="loadedExec.name"
                   :label="loadedExec.name" />
               </el-select>
             </el-form-item>
-            <el-form-item class="DialogScript" label="Start Command Line Arguments" :label-width="formLabelWidth">
+            <el-form-item label="Start Command Line Arguments" :label-width="fit-content">
               <el-input v-model="form.startArgs" type="textarea" :rows="1" autocomplete="off" />
             </el-form-item>
           </el-form>
-          <el-form-item class="DialogScript" label="Stop Command Line Arguments" :label-width="formLabelWidth">
+          <el-form-item label="Stop Command Line Arguments" :label-width="fit-content">
             <el-input v-model="form.stopArgs" type="textarea" :rows="1" autocomplete="off" />
           </el-form-item>
           <template #footer>
@@ -55,7 +55,8 @@
         <el-dialog v-model="newProjectFormVisible" title="New Project">
           <el-form :model="projectForm">
             <el-form-item class="DialogScript" label="Project name" :label-width="formLabelWidth">
-              <el-input v-model="projectForm.name" type="textarea" :rows="1" placeholder="Enter Project Name" autocomplete="off" />
+              <el-input v-model="projectForm.name" type="textarea" :rows="1" placeholder="Enter Project Name"
+                autocomplete="off" />
             </el-form-item>
             <el-form-item class="DialogScript" label="Current Index" :label-width="formLabelWidth">
               <el-input-number v-model="projectForm.currentIndex" placeholder="0" :min="0" :max="99999" />
@@ -80,14 +81,11 @@
 
 <script>
 import { reactive, ref } from "vue";
-import Overlay from "vuejs-overlay";
 import ScriptsList from "./ScriptsList.vue";
 import MainRemote from "./MainRemote.vue";
 import ProjectsList from "./ProjectsList.vue";
 import Notifications from "./Notifications.vue";
-import drag from "v-drag";
 import VueGridLayout from "vue-grid-layout";
-import { GridItem, GridLayout } from "vue-grid-layout";
 
 let form = reactive({
   name: "",
@@ -118,19 +116,22 @@ export default {
     MainRemote: MainRemote,
   },
   created() {
-// Listening for an event called "updateActiveProject" and when it is emitted, it sets the
-// selectedProject to the event.
+
+    // Listening for an event called "updateActiveProject" and when it is emitted, it sets the
+    // selectedProject to the event.
     this.emitter.on("updateActiveProject", (evt) => {
       this.selectedProject = evt;
     });
-// Listening for an event called "openEditScript" and when it is emitted, it calls the function
-// openFileDialog.
+
+    // Listening for an event called "openEditScript" and when it is emitted, it calls the function
+    // openFileDialog.
     this.emitter.on("openEditScript", (evt) => {
       console.log(evt);
       this.openFileDialog(evt);
     });
-// Listening for an event called "openNewProjectForm" and when it is emitted, it sets the
-//       newProjectFormVisible to true.
+
+    // Listening for an event called "openNewProjectForm" and when it is emitted, it sets the
+    //       newProjectFormVisible to true.
     this.emitter.on("openNewProjectForm", () => {
       this.newProjectFormVisible = true;
     });
@@ -138,10 +139,10 @@ export default {
   data() {
     return {
       componentNames: [
-        { name: "MainRemote", x: 0, y: 0, w: 137, h: 8.7, i: "0", },
-        { name: "ProjectsList", x: 140, y: 0, w: 48, h: 4, i: "1", },
-        { name: "ScriptsList", x: 175, y: 0, w: 42, h: 8, i: "2", },
-        { name: "Notifications", x: 140, y: 4, w: 33, h: 8, i: "3", },
+        { name: "MainRemote", x: 0, y: 0, w: 120, h: 8, i: "0", },
+        { name: "ProjectsList", x: 153, y: 0, w: 48, h: 4, i: "1", },
+        { name: "ScriptsList", x: 202, y: 0, w: 38, h: 7, i: "2", },
+        { name: "Notifications", x: 120, y: 0, w: 33, h: 8, i: "3", },
       ],
       activeProjects: [],
       selectedProject: null,
@@ -156,7 +157,7 @@ export default {
   },
   async mounted() {
     let self = this;
-// Fetching data from the server.
+    // Fetching data from the server.
     const projectData = fetch("http://localhost:3000/projects");
     const scriptData = fetch("http://localhost:3000/scripts");
     const execData = fetch("http://localhost:3000/execs");
@@ -168,7 +169,7 @@ export default {
     this.loadedExecs = newExecData;
     this.activeProjects = newProjectData;
 
-// Checking if the current project is active.
+    // Checking if the current project is active.
     for (let i = 0; i < this.activeProjects.length; i++) {
       if (this.activeProjects[i].current === true) {
         this.selectedProject = this.activeProjects[i];
@@ -176,9 +177,9 @@ export default {
     }
   },
   methods: {
-// A function that is called when the user clicks the confirm button in the new project form. It checks
-// if the current project is active and if it is, it emits an event called refreshProjects. If it is
-// not active, it sends a POST request to the server and then emits an event called refreshProjects.
+    // A function that is called when the user clicks the confirm button in the new project form. It checks
+    // if the current project is active and if it is, it emits an event called refreshProjects. If it is
+    // not active, it sends a POST request to the server and then emits an event called refreshProjects.
     addNewProject() {
       if (this.projectForm.current === true) {
         this.emitter.emit("refreshProjects", this.projectForm);
@@ -196,7 +197,7 @@ export default {
       fetch('http://localhost:3000/projects/', requestOptions);
       this.emitter.emit("refreshProjects", this.projectForm);
     },
-// Setting the form to the event that is passed in.
+    // Setting the form to the event that is passed in.
     openFileDialog(evt) {
       this.scriptDialogFormVisible = true;
       this.form.name = evt.name;
