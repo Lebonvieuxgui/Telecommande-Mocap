@@ -73,17 +73,25 @@ export default {
   async mounted() {
     let self = this;
 
-    const data = await fetch("http://localhost:3000/scripts");
-    const newData = await data.json();
-    this.activeScripts = newData;
-    const execData = await fetch("http://localhost:3000/execs");
-    const newExecData = await execData.json();
+// Fetching data from the server and assigning it to the activeScripts and loadedExecs variables.
+    const scriptData = fetch("http://localhost:3000/scripts");
+    const execData = fetch("http://localhost:3000/execs");
+    const res = await Promise.all([scriptData, execData])
+    const newScriptData = await res[0].json();
+    const newExecData = await res[1].json();
+    this.activeScripts = newScriptData;
     this.loadedExecs = newExecData;
   },
   methods: {
+// This is a method that is called when the user clicks on the edit button. It emits an event called
+// openEditScript and passes the selectedScript as a parameter.
     openEditScript() {
       this.emitter.emit("openEditScript", this.selectedScript);
     },
+// This method is called when the user clicks on the checkbox in the header of the table. It checks if
+// the checkbox is checked or not and if it is checked it assigns the id of each script to the
+// selectedScripts variable. If the checkbox is not checked it assigns an empty array to the
+// selectedScripts variable.
     async selectAll() {
       if (this.allSelected) {
         const selectedScripts = this.activeScripts.map((script) => script.id);
@@ -92,11 +100,15 @@ export default {
         this.selectedScripts = [];
       }
     },
+// A method that is called when the user clicks on the save button. It fetches the data from the server
+// and assigns it to the activeScripts variable.
     reloadScripts() {
       const data = fetch("http://localhost:3000/scripts");
       const newData = JSON.stringify(data);
       this.activeScripts = newData;
     },
+// A method that is called when the user clicks on the edit button. It emits an event called
+// // openEditScript and passes the selectedScript as a parameter.
     selectScript(name, activeScripts) {
       for (let script in activeScripts) {
         if (activeScripts[script].name == name) {
@@ -116,6 +128,7 @@ export default {
         };
       }
     },
+// A method that is called when the user clicks on the save button. It sends changes made to selected script to the server
     postChanges() {
       let newData = this.selectedScript;
       if (this.form.name !== newData.name) {

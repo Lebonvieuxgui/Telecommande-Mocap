@@ -16,8 +16,8 @@
       </el-header>
       <el-main>
         <grid-layout v-model:layout="componentNames" :col-num="250" :row-height="30" :row-width="10"
-          :is-draggable="true" :is-resizable="false" :responsive="responsive" :is-mirrored="false"
-          :vertical-compact="false" :margin="[10, 10]" :use-css-transforms="true" @layout-updated="updateLayout">
+          :is-draggable="true" :is-resizable="false" :responsive="responsive" :is-mirrored="false" 
+          :vertical-compact="false" :margin="[10, 10]" :use-css-transforms="true" @layout-updated="updateLayout" :autoSize="true">
           <grid-item v-for="component in componentNames" :x="component.x" :y="component.y" :w="component.w"
             :h="component.h" :i="component.i" :key="component.i">
             <component v-bind:is="component.name" />
@@ -118,13 +118,19 @@ export default {
     MainRemote: MainRemote,
   },
   created() {
+// Listening for an event called "updateActiveProject" and when it is emitted, it sets the
+// selectedProject to the event.
     this.emitter.on("updateActiveProject", (evt) => {
       this.selectedProject = evt;
     });
+// Listening for an event called "openEditScript" and when it is emitted, it calls the function
+// openFileDialog.
     this.emitter.on("openEditScript", (evt) => {
       console.log(evt);
       this.openFileDialog(evt);
     });
+// Listening for an event called "openNewProjectForm" and when it is emitted, it sets the
+//       newProjectFormVisible to true.
     this.emitter.on("openNewProjectForm", () => {
       this.newProjectFormVisible = true;
     });
@@ -150,22 +156,29 @@ export default {
   },
   async mounted() {
     let self = this;
-    const projectData = await fetch("http://localhost:3000/projects");
-    const newProjectData = await projectData.json();
+// Fetching data from the server.
+    const projectData = fetch("http://localhost:3000/projects");
+    const scriptData = fetch("http://localhost:3000/scripts");
+    const execData = fetch("http://localhost:3000/execs");
+    const res = await Promise.all([scriptData, execData, projectData]);
+    const newScriptData = await res[0].json();
+    const newExecData = await res[1].json();
+    const newProjectData = await res[2].json();
+    this.activeScripts = newScriptData;
+    this.loadedExecs = newExecData;
     this.activeProjects = newProjectData;
+
+// Checking if the current project is active.
     for (let i = 0; i < this.activeProjects.length; i++) {
       if (this.activeProjects[i].current === true) {
         this.selectedProject = this.activeProjects[i];
       }
     }
-    const data = await fetch("http://localhost:3000/scripts");
-    const newData = await data.json();
-    this.activeScripts = newData;
-    const execData = await fetch("http://localhost:3000/execs");
-    const newExecData = await execData.json();
-    this.loadedExecs = newExecData;
   },
   methods: {
+// A function that is called when the user clicks the confirm button in the new project form. It checks
+// if the current project is active and if it is, it emits an event called refreshProjects. If it is
+// not active, it sends a POST request to the server and then emits an event called refreshProjects.
     addNewProject() {
       if (this.projectForm.current === true) {
         this.emitter.emit("refreshProjects", this.projectForm);
@@ -182,8 +195,8 @@ export default {
       };
       fetch('http://localhost:3000/projects/', requestOptions);
       this.emitter.emit("refreshProjects", this.projectForm);
-
     },
+// Setting the form to the event that is passed in.
     openFileDialog(evt) {
       this.scriptDialogFormVisible = true;
       this.form.name = evt.name;
@@ -199,6 +212,9 @@ export default {
         };
       }
     },
+    // Fetching data from the server and then setting the activeProjects to the new data. It then
+    // checks if the current project is active and if it is, it sets the selectedProject to the current
+    // project. It then returns the selectedProject.
     async refreshProject() {
       const data = await fetch("http://localhost:3000/projects");
       const newData = await data.json();

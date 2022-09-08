@@ -93,6 +93,8 @@ export default {
     }
   },
   created() {
+    // Listening for an event called refreshProjects. When it receives this event, it will run the code
+    // inside the function.
     this.emitter.on("refreshProjects", (evt) => {
       if (evt.current === true) {
         this.activate(evt);
@@ -108,6 +110,7 @@ export default {
       }
     })
   },
+  // Fetching data from the server and setting the data to the activeProjects array.
   async mounted() {
     let self = this;
 
@@ -124,12 +127,18 @@ export default {
     }
   },
   methods: {
+// This is a method that is called when the user selects a new project. It emits an event called
+// updateActiveProject. This event is listened for in the main.ts file.
     updateActiveProject() {
       this.emitter.emit('updateActiveProject', this.selectedProject)
     },
+// This is a method that is called when the user clicks the plus button. It emits an event called
+// openNewProjectForm. This event is listened for in the main.ts file.
     openNewProjectForm() {
       this.emitter.emit("openNewProjectForm");
     },
+    // A method that is called when the user selects a new project. It emits an event called
+    // // updateActiveProject. This event is listened for in the main.ts file.
     activate(selectedProject) {
       this.selectedProject = selectedProject;
       this.num = this.selectedProject.currentIndex;
@@ -148,6 +157,8 @@ export default {
       fetch('http://localhost:3000/projects/', requestOptions);
       this.emitter.emit('updateActiveProject', this.selectedProject);
     },
+// This method is called when the user selects a new project. It sets the current project to true and
+// returns the new active project.
     postCurrent() {
       let newActiveData;
       let check = 0;
@@ -169,6 +180,8 @@ export default {
       newActiveData.current = true;
       return newActiveData;
     },
+// This method is called when the user selects a new project. It sets the current project to false and
+// returns the new inactive project.
     deactivateOldCurrent() {
       let newInactiveData;
       let check = 0;
@@ -184,6 +197,8 @@ export default {
       newInactiveData.current = false;
       return newInactiveData;
     },
+// This is a method that is called when the user selects a new project. It fetches the data from the
+// server and sets the data to the activeProjects array.
     async refreshProjects() {
       const data = await fetch("http://localhost:3000/projects");
       const newData = await data.json();

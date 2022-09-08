@@ -50,6 +50,7 @@ const handleChange = (value: number) => {
   console.log(value)
 }
 
+// A function that formats the currentIndex to be a string with leading zeros.
 function indexFormatter(currentIndex) {
   if (currentIndex < 10) {
     currentIndex = "000" + currentIndex
@@ -63,7 +64,6 @@ function indexFormatter(currentIndex) {
   return currentIndex;
 }
 
-// do not use same name with ref
 const form = reactive({
   name: '',
   region: '',
@@ -98,15 +98,21 @@ export default {
       }
     }
   },
+// Calling the refreshProject() method when the component is mounted.
   mounted() {
     this.refreshProject()
   },
+// Listening for an event called 'updateActiveProject' and when it receives it, it sets the
+// selectedProject to the event.
   created() {
     this.emitter.on('updateActiveProject', (evt) => {
       this.selectedProject = evt
     })
   },
   methods: {
+// A method that is called when the user types in the sequence name. It takes the current project name,
+// the current index, the sequence name, and the take number and concatenates them together to form a
+// filename.
     getFilename() {
       let currentIndex = indexFormatter(this.selectedProject.currentIndex)
 
@@ -114,6 +120,8 @@ export default {
       this.filename = this.$globalFilename
       return this.filename
     },
+// A method that is called when the component is mounted. It fetches the projects from the database and
+// sets the selectedProject to the current project.
     async refreshProject() {
       const data = await fetch("http://localhost:3000/projects");
       const newData = await data.json();

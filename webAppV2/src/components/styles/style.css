@@ -95,9 +95,9 @@
 }
 
 .record-button{
-  position: absolute;
-  top: 85%;
-  left: 45%;
+  position: relative;
+  top: 10px;
+  left: 10px;
 }
 
 a {
