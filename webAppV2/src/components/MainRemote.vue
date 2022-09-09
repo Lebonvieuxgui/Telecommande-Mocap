@@ -92,10 +92,12 @@ export default {
       },
     };
   },
+
   // Calling the refreshProject() method when the component is mounted.
   mounted() {
     this.refreshProject();
   },
+
   // Listening for an event called 'updateActiveProject' and when it receives it, it sets the
   // selectedProject to the event.
   created() {
@@ -104,6 +106,7 @@ export default {
     });
   },
   methods: {
+
     // A method that is called when the user types in the sequence name. It takes the current project name,
     // the current index, the sequence name, and the take number and concatenates them together to form a
     // filename.
@@ -120,6 +123,7 @@ export default {
       this.filename = this.$globalFilename;
       return this.filename;
     },
+
     // A method that is called when the component is mounted. It fetches the projects from the database and
     // sets the selectedProject to the current project.
     async refreshProject() {

@@ -206,6 +206,7 @@ export default {
     }
   },
   methods: {
+
     // A function that is called when the user clicks the confirm button in the new project form. It checks
     // if the current project is active and if it is, it emits an event called refreshProjects. If it is
     // not active, it sends a POST request to the server and then emits an event called refreshProjects.
@@ -226,6 +227,7 @@ export default {
       fetch('http://localhost:3000/projects/', requestOptions);
       this.emitter.emit("refreshProjects", this.projectForm);
     },
+
     // Setting the form to the event that is passed in.
     openFileDialog(evt) {
       this.scriptDialogFormVisible = true;
@@ -242,6 +244,7 @@ export default {
         };
       }
     },
+
     // Fetching data from the server and then setting the activeProjects to the new data. It then
     // checks if the current project is active and if it is, it sets the selectedProject to the current
     // project. It then returns the selectedProject.
