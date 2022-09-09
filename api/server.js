@@ -75,9 +75,12 @@ app.put('/projects/:id', (req,res) => {
     res.status(200).json(project)
 });
 
-/* Listening for a delete request to the url `/projects/:id`. When it receives a request it will set
-the id of the request body to the length of the projects array plus one, push
-the request body to the projects array, update the projects file with the new projects array, and
+
+/* This is a delete request that is listening for a request to the url
+`/projects/:id`. When it receives a request it will set the id of the request
+body to the length of the projects array plus one, push
+the request body to the projects array, update the projects file with the new
+projects array, and
 send a response with a status of 200 and the json object `projects`. */
 app.delete('/projects/:id', (req,res) => {
     const id = parseInt(req.body.id)
