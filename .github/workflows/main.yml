@@ -3,7 +3,7 @@ name: Mirroring
 on: [push, delete]
 
 jobs:
-  to_github:
+  to_github_elliot:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -16,4 +16,16 @@ jobs:
             git@github.com:Lebonvieuxgui/Telecommande-Mocap.git
           ssh_private_key:
             ${{ secrets.elliot_key }}
+            ${{ secrets.guillaume_key}}
+  to_github_guillaume:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: pixta-dev/repository-mirroring-action@v1
+        with:
+          target_repo_url:
+            git@github.com:Lebonvieuxgui/Telecommande-Mocap.git
+          ssh_private_key:
             ${{ secrets.guillaume_key}}
