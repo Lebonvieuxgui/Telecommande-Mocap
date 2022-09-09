@@ -51,7 +51,6 @@
             </span>
           </template>
         </el-dialog>
-
         <el-dialog v-model="newProjectFormVisible" title="New Project">
           <el-form :model="projectForm">
             <el-form-item class="DialogScript" label="Project name" :label-width="formLabelWidth">
@@ -105,30 +104,6 @@ const newProjectFormVisible = ref(false);
 const scriptDialogFormVisible = ref(false);
 const formLabelWidth = "140px";
 
-const open = (evt) => {
-  ElMessageBox.confirm(
-    'This action will permanently delete the project from the database. Continue?',
-    'Warning',
-    {
-      confirmButtonText: 'OK',
-      cancelButtonText: 'Cancel',
-      type: 'warning',
-    }
-  )
-    .then(() => {
-      ElMessage({
-        type: 'success',
-        message: 'Delete completed',
-      })
-    })
-    .catch(() => {
-      ElMessage({
-        type: 'info',
-        message: 'Delete canceled',
-      })
-    })
-}
-
 export default {
   name: "SolidRemoteHome",
   components: {
@@ -154,13 +129,16 @@ export default {
       this.openFileDialog(evt);
     });
 
+    this.emitter.on("refreshProjects", (evt) => {
+      this.refreshProjects();
+      });
     // Listening for an event called "openNewProjectForm" and when it is emitted, it sets the
     //       newProjectFormVisible to true.
     this.emitter.on("openNewProjectForm", () => {
       this.newProjectFormVisible = true;
     });
     this.emitter.on("confirmProjectDelete", (evt) => {
-      this.open(evt);
+      this.showConfirmDelete = true;
     });
   },
   data() {
@@ -181,7 +159,6 @@ export default {
       loadedExecs: [],
       activeScripts: [],
       showConfirmDelete: false,
-      open,
     };
   },
   async mounted() {

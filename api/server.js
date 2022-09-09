@@ -2,11 +2,11 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const fs = require("fs");
-const projects = require("./dataBase/data/Projects.json");
-const scripts = require("./dataBase/data/launchScripts.json");
-const execs = require("./dataBase/data/execs.json");
-const update = require("./dataBase/utilities/updateFile.js");
-const execLoad = require("./dataBase/utilities/loadExecs.js");
+const projects = require("./database/data/Projects.json");
+const scripts = require("./database/data/launchScripts.json");
+const execs = require("./database/data/execs.json");
+const update = require("./database/utilities/updateFile.js");
+const execLoad = require("./database/utilities/loadExecs.js");
 
 /* Allowing the server to be accessed from the localhost. */
 var corsOptions = {
@@ -42,7 +42,7 @@ app.post('/projects', (req,res) => {
     console.log("post");
     req.body.id = projects.length + 1;
     projects.push(req.body);
-    update.updateFile(projects, './dataBase/data/Projects.json')
+    update.updateFile(projects, './database/data/Projects.json')
     res.status(200).json(projects);
 });
 
@@ -58,7 +58,7 @@ app.put('/projects/', (req, res) => {
         projects[id] = req.body[i];
     }
     console.log("test");
-    update.updateFile(projects, './dataBase/data/Projects.json');
+    update.updateFile(projects, './database/data/Projects.json');
     res.status(200).json(projects);
 });
 
@@ -71,7 +71,7 @@ app.put('/projects/:id', (req,res) => {
     project.name =req.body.name,
     project.currentIndex =req.body.currentIndex,
     project.current =req.body.current,
-    update.updateFile(projects, './dataBase/data/Projects.json')
+    update.updateFile(projects, './database/data/Projects.json')
     res.status(200).json(project)
 });
 
@@ -80,9 +80,17 @@ the id of the request body to the length of the projects array plus one, push
 the request body to the projects array, update the projects file with the new projects array, and
 send a response with a status of 200 and the json object `projects`. */
 app.delete('/projects/:id', (req,res) => {
-    const id = parseInt(req.params.id)
+    const id = parseInt(req.body.id)
+    console.log(id)
     let project = projects.find(project => project.id === id)
     projects.splice(projects.indexOf(project),1)
+    let length = projects.length;
+    for (let i = id - 1; i < length; i++) {
+        projects[i].id--;
+    }
+    project = projects.find(project => project.id === id);
+    project.current = true;
+    update.updateFile(projects, './database/data/Projects.json')
     res.status(200).json(projects)
 });
 
@@ -121,7 +129,7 @@ app.put('/scripts/:id', (req,res) => {
     script.startArgs =req.body.startArgs,
     script.stopArgs =req.body.stopArgs,
     console.log('wow');
-    update.updateFile(scripts, './dataBase/data/launchScripts.json')
+    update.updateFile(scripts, './database/data/launchScripts.json')
     res.status(200).json(script)
 });
 

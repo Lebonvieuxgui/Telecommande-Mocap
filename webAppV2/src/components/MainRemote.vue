@@ -104,6 +104,9 @@ export default {
     this.emitter.on("updateActiveProject", (evt) => {
       this.selectedProject = evt;
     });
+    this.emitter.on("refreshProject", () => {
+      this.refreshProject();
+      });
   },
   methods: {
 

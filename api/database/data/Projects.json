@@ -70,35 +70,5 @@
         "name": "FB",
         "currentIndex": 1,
         "current": false
-    },
-    {
-        "id": 13,
-        "name": "fb2",
-        "currentIndex": 549,
-        "current": false
-    },
-    {
-        "id": 14,
-        "name": "obj",
-        "currentIndex": 52,
-        "current": false
-    },
-    {
-        "id": 15,
-        "name": "INQ",
-        "currentIndex": 76,
-        "current": false
-    },
-    {
-        "id": 16,
-        "name": "COE",
-        "currentIndex": 221,
-        "current": false
-    },
-    {
-        "id": 17,
-        "name": "GDT",
-        "currentIndex": 32,
-        "current": false
     }
 ]

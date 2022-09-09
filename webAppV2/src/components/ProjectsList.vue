@@ -30,19 +30,23 @@
               </span>
             </el-option>
           </el-select>
-          <el-input-number v-model="num" :min="0" :max="99999" size="large"
-            @change="handleChangeNum"></el-input-number>
+          <el-input-number v-model="num" :min="0" :max="99999" size="large" @change="handleChangeNum"></el-input-number>
           <span>
             <el-button class="add-projects">
               <el-icon @click="openNewProjectForm" style="color: black;">
                 <Plus />
               </el-icon>
             </el-button>
-            <el-button class="delete-projects" @click="confirmProjectDelete">
-              <el-icon style="color: black;">
-                <Delete />
-              </el-icon>
-            </el-button>
+            <el-popconfirm title="Are you sure want to premanently delete this project?" @confirm="deleteProject()">
+              <template #reference>
+                <el-button class="delete-projects" @click="confirmProjectDelete">
+                  <el-icon style="color: black;">
+                    <Delete />
+                  </el-icon>
+                </el-button>
+              </template>
+
+            </el-popconfirm>
           </span>
         </tbody>
       </div>
@@ -211,12 +215,36 @@ export default {
       return newInactiveData;
     },
 
+    async deleteProject() {
+      console.log(this.activeProject)
+      let id = this.activeProject.id;
+      let requestOptions = {
+        method: 'DELETE',
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "*/*",
+          "Connection": "keep-alive"
+        },
+        body: JSON.stringify(this.activeProject)
+      };
+      await fetch('http://localhost:3000/projects/' + id, requestOptions);
+      await this.refreshProjects();
+      await this.emitter.emit('updateActiveProject', this.activeProject);
+    },
     // This is a method that is called when the user selects a new project. It fetches the data from the
     // server and sets the data to the activeProjects array.
     async refreshProjects() {
       const data = await fetch("http://localhost:3000/projects");
       const newData = await data.json();
       this.activeProjects = newData;
+      for (let i = 0; i < this.activeProjects.length; i++) {
+        if (this.activeProjects[i].current === true) {
+          this.activeProject = this.activeProjects[i];
+          this.selected = this.activeProject.id;
+          this.num = this.activeProject.currentIndex;
+          return;
+        }
+      }
     }
   },
 }
