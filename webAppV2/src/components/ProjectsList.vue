@@ -30,20 +30,20 @@
               </span>
             </el-option>
           </el-select>
-          <el-input-number v-model="num" :min="0" :max="99999" controls-position="right" size="large"
-          @change="handleChangeNum"></el-input-number>
+          <el-input-number v-model="num" :min="0" :max="99999" size="large"
+            @change="handleChangeNum"></el-input-number>
           <span>
-          <el-button class="add-projects">
-            <el-icon @click="openNewProjectForm" style="color: black;">
-              <Plus />
-            </el-icon>
-          </el-button>
-          <el-button class="delete-projects">
-            <el-icon style="color: black;">
-              <Delete />
-            </el-icon>
-          </el-button>
-        </span>
+            <el-button class="add-projects">
+              <el-icon @click="openNewProjectForm" style="color: black;">
+                <Plus />
+              </el-icon>
+            </el-button>
+            <el-button class="delete-projects" @click="confirmProjectDelete">
+              <el-icon style="color: black;">
+                <Delete />
+              </el-icon>
+            </el-button>
+          </span>
         </tbody>
       </div>
     </table>
@@ -134,6 +134,9 @@ export default {
     // updateActiveProject. This event is listened for in the main.ts file.
     updateActiveProject() {
       this.emitter.emit('updateActiveProject', this.selectedProject)
+    },
+    confirmProjectDelete() {
+      this.emitter.emit("confirmProjectDelete", this.selectedProject);
     },
     // This is a method that is called when the user clicks the plus button. It emits an event called
     // openNewProjectForm. This event is listened for in the main.ts file.

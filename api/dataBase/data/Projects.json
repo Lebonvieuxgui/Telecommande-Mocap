@@ -21,13 +21,13 @@
         "id": 4,
         "name": "lc",
         "currentIndex": 202,
-        "current": true
+        "current": false
     },
     {
         "id": 5,
         "name": "test",
         "currentIndex": 93,
-        "current": false
+        "current": true
     },
     {
         "id": 6,

@@ -14,7 +14,7 @@
           <el-form-item label="Sequence" style="margin-top: 15px" :label-width="useFormLabelWidth">
             <el-input v-model="form.name" @change="getFilename" />
           </el-form-item>
-          <el-form-item label="Take" style="margin-top: 15px; margin-right: 10px">
+          <el-form-item label="Take" style="margin-top: 1vw;">
             <el-input-number v-model="num" :min="1" :max="99999" @change="handleChange" />
           </el-form-item>
         </div>
@@ -30,7 +30,6 @@
                 <VideoPlay />
               </el-icon>
             </div>
-            <div v-bind:class="record ? 'recording' : 'not-recording'"></div>
           </el-button>
         </el-form-item>
       </div>

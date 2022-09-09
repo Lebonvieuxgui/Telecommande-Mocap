@@ -127,6 +127,10 @@ b {
   box-shadow: inset 5px 5px 10px #2a2a2a, inset -5px -5px 10px #363636;
 }
 
+.group1 {
+  margin-right: -7vw;
+}
+
 .script-table-head {
   padding: 50px;
   border-radius: 10px;
@@ -168,6 +172,8 @@ body {
   background: linear-gradient(145deg, #333333, #2b2b2b);
   box-shadow: 5px 5px 10px #2a2a2a, -5px -5px 10px #363636;
 }
+
+/*record-button*/
 
 .record-button {
   margin-right: 3vw;
@@ -222,6 +228,9 @@ body {
   color:white;
   border-color:transparent;
 }
+
+/*deploy-component*/
+
 .deploy-component-btn {
   height: 1vw;
   width: 1vw;
@@ -232,6 +241,8 @@ body {
 .deploy-component-btn:active {
   background-color: var(--g);
 }
+
+/*project*/
 
 .project-table {
   width: fit-content;
@@ -254,12 +265,14 @@ body {
 }
 
 .add-projects {
-  background-color: green;
+  background-color: var(--color5);
+  box-shadow: inset 5px 5px 10px #006938, inset -5px -5px 10px #004726;
   border-color: transparent;
 }
 
 .delete-projects {
-  background-color:red;
+  background-color:#a30023;
+  box-shadow: inset 5px 5px 10px #92001f, inset -5px -5px 10px #5f0014;
   border-color: transparent;
 }
 

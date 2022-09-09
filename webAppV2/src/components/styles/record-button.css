@@ -1,0 +1,53 @@
+.record-button {
+    margin-right: 3vw;
+    margin-top: 1vw;
+  }
+  
+  .not-recording {
+    font-size: 30px;
+    border-radius: 10px;
+    background: #a30023;
+    box-shadow: inset 5px 5px 10px #7a001a, inset -5px -5px 10px #cc002c;
+    border-color: transparent;
+    height: fit-content;
+    width: fit-content;
+  }
+  .not-recording:hover {
+    background: #a30023;
+    color:white;
+    border-color:transparent;
+  }
+  .not-recording:active {
+    background: #a30023;
+    color:white;
+    border-color:transparent;
+  }
+  .not-recording:focus {
+    background: #a30023;
+    color:white;
+    border-color:transparent;
+  }
+  .recording {
+    border-radius: 10px;
+    font-size: 30px;
+    background: #303030;
+    box-shadow: inset 5px 5px 10px #242424, inset -5px -5px 10px #3c3c3c;
+    border-color: transparent;
+    height: fit-content;
+    width: fit-content;
+  }
+  .recording:hover {
+    background: #303030;
+    color:white;
+    border-color:transparent;
+  }
+  .recording:active {
+    background: #303030;
+    color:white;
+    border-color:transparent;
+  }
+  .recording:focus {
+    background: #303030;
+    color:white;
+    border-color:transparent;
+  }

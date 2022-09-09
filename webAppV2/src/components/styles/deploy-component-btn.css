@@ -1,0 +1,11 @@
+.deploy-component-btn {
+    height: 1vw;
+    width: 1vw;
+    border-color: transparent;
+    background: transparent;
+  }
+  
+  .deploy-component-btn:active {
+    background-color: var(--g);
+  }
+  

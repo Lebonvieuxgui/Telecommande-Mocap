@@ -15,7 +15,7 @@
         </div>
       </el-header>
       <el-main>
-        <grid-layout v-model:layout.sync="componentNames" :col-num="250" :row-height="30" :row-width="10"
+        <grid-layout v-model:layout.sync="componentNames" :col-num="250" :row-height="1" :row-width="100"
           :is-draggable="true" :is-resizable="true" :responsive="false" :is-mirrored="false" :vertical-compact="false"
           :margin="[10, 10]" :use-css-transforms="true" :autoSize="true">
           <grid-item v-for="component in componentNames" :x="component.x" :y="component.y" :w="component.w"
@@ -105,6 +105,30 @@ const newProjectFormVisible = ref(false);
 const scriptDialogFormVisible = ref(false);
 const formLabelWidth = "140px";
 
+const open = (evt) => {
+  ElMessageBox.confirm(
+    'This action will permanently delete the project from the database. Continue?',
+    'Warning',
+    {
+      confirmButtonText: 'OK',
+      cancelButtonText: 'Cancel',
+      type: 'warning',
+    }
+  )
+    .then(() => {
+      ElMessage({
+        type: 'success',
+        message: 'Delete completed',
+      })
+    })
+    .catch(() => {
+      ElMessage({
+        type: 'info',
+        message: 'Delete canceled',
+      })
+    })
+}
+
 export default {
   name: "SolidRemoteHome",
   components: {
@@ -135,14 +159,17 @@ export default {
     this.emitter.on("openNewProjectForm", () => {
       this.newProjectFormVisible = true;
     });
+    this.emitter.on("confirmProjectDelete", (evt) => {
+      this.open(evt);
+    });
   },
   data() {
     return {
       componentNames: [
-        { name: "MainRemote", x: 0, y: 0, w: 120, h: 8, i: "0", },
-        { name: "ProjectsList", x: 153, y: 0, w: 48, h: 4, i: "1", },
-        { name: "ScriptsList", x: 202, y: 0, w: 38, h: 7, i: "2", },
-        { name: "Notifications", x: 120, y: 0, w: 33, h: 8, i: "3", },
+        { name: "MainRemote", x: 0, y: 0, w: 100, h: 31, i: "0", },
+        { name: "Notifications", x: 105, y: 0, w: 33, h: 28, i: "3", },
+        { name: "ProjectsList", x: 143, y: 0, w: 36, h: 23, i: "1", },
+        { name: "ScriptsList", x: 182, y: 0, w: 38, h: 27, i: "2", },
       ],
       activeProjects: [],
       selectedProject: null,
@@ -152,7 +179,9 @@ export default {
       newProjectFormVisible,
       formLabelWidth,
       loadedExecs: [],
-      activeScripts: []
+      activeScripts: [],
+      showConfirmDelete: false,
+      open,
     };
   },
   async mounted() {
