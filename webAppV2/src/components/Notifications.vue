@@ -4,7 +4,7 @@
             <thead class='script-table-head'>
                 <tr>
                     <th>
-                        Notifications<el-button @click="this.show = !this.show;" class="add-project-btn">
+                        Notifications<el-button @click="this.show = !this.show;" class="deploy-component-btn">
                             <span v-if="!show">
                                 <el-icon>
                                     <Plus />

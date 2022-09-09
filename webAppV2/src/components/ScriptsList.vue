@@ -6,7 +6,7 @@
           <th>
             <el-checkbox v-model="allSelected" @change="selectAll">
             </el-checkbox>
-            Scripts<el-button @click="this.show = !this.show" class="add-project-btn">
+            Scripts<el-button @click="this.show = !this.show" class="deploy-component-btn">
               <span v-if="!show">
                 <el-icon>
                   <Plus />

@@ -4,7 +4,7 @@
             <thead class="project-table-head">
                 <tr>
                     <th>Projects</th>
-                    <el-button class="add-project-btn">
+                    <el-button class="deploy-component-btn">
                         <el-icon><Plus/></el-icon>
                     </el-button>
                 </tr>

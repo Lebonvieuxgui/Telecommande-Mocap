@@ -4,7 +4,7 @@
       <thead class="project-table-head">
         <tr>
           <th>
-            Projects<el-button @click="this.show = !this.show" class="add-project-btn">
+            Projects<el-button @click="this.show = !this.show" class="deploy-component-btn">
               <span v-if="!show">
                 <el-icon>
                   <Plus />
@@ -21,26 +21,29 @@
       </thead>
       <div v-if="show">
         <tbody class="project-table-body">
-          <el-select v-model="selected" effect="dark" class="project-select" placeholder="Select project" size="large" @click="refreshProjects()">
+          <el-select v-model="selected" effect="dark" class="project-select" placeholder="Select project" size="large"
+            @click="refreshProjects()">
             <el-option v-for="project in activeProjects" :key="project.id" :label="project.name" :value="project.id"
               @click="activate(project);">
               <span>{{ project.name }}</span>
               <span style="float: right; color: #8492a6; font-size: 13px">{{ project.currentIndex }}
-                <el-button class="delete-projects">
-                  <el-icon>
-                    <Delete />
-                  </el-icon>
-                </el-button>
               </span>
             </el-option>
           </el-select>
-          <el-button>
-            <el-icon @click="openNewProjectForm">
+          <el-input-number v-model="num" :min="0" :max="99999" controls-position="right" size="large"
+          @change="handleChangeNum"></el-input-number>
+          <span>
+          <el-button class="add-projects">
+            <el-icon @click="openNewProjectForm" style="color: black;">
               <Plus />
             </el-icon>
           </el-button>
-          <el-input-number v-model="num" :min="0" :max="99999" controls-position="right" size="large"
-            @change="handleChangeNum"></el-input-number>
+          <el-button class="delete-projects">
+            <el-icon style="color: black;">
+              <Delete />
+            </el-icon>
+          </el-button>
+        </span>
         </tbody>
       </div>
     </table>
@@ -127,13 +130,13 @@ export default {
     }
   },
   methods: {
-// This is a method that is called when the user selects a new project. It emits an event called
-// updateActiveProject. This event is listened for in the main.ts file.
+    // This is a method that is called when the user selects a new project. It emits an event called
+    // updateActiveProject. This event is listened for in the main.ts file.
     updateActiveProject() {
       this.emitter.emit('updateActiveProject', this.selectedProject)
     },
-// This is a method that is called when the user clicks the plus button. It emits an event called
-// openNewProjectForm. This event is listened for in the main.ts file.
+    // This is a method that is called when the user clicks the plus button. It emits an event called
+    // openNewProjectForm. This event is listened for in the main.ts file.
     openNewProjectForm() {
       this.emitter.emit("openNewProjectForm");
     },
@@ -157,8 +160,8 @@ export default {
       fetch('http://localhost:3000/projects/', requestOptions);
       this.emitter.emit('updateActiveProject', this.selectedProject);
     },
-// This method is called when the user selects a new project. It sets the current project to true and
-// returns the new active project.
+    // This method is called when the user selects a new project. It sets the current project to true and
+    // returns the new active project.
     postCurrent() {
       let newActiveData;
       let check = 0;
@@ -180,8 +183,8 @@ export default {
       newActiveData.current = true;
       return newActiveData;
     },
-// This method is called when the user selects a new project. It sets the current project to false and
-// returns the new inactive project.
+    // This method is called when the user selects a new project. It sets the current project to false and
+    // returns the new inactive project.
     deactivateOldCurrent() {
       let newInactiveData;
       let check = 0;
@@ -197,8 +200,8 @@ export default {
       newInactiveData.current = false;
       return newInactiveData;
     },
-// This is a method that is called when the user selects a new project. It fetches the data from the
-// server and sets the data to the activeProjects array.
+    // This is a method that is called when the user selects a new project. It fetches the data from the
+    // server and sets the data to the activeProjects array.
     async refreshProjects() {
       const data = await fetch("http://localhost:3000/projects");
       const newData = await data.json();

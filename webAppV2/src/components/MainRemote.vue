@@ -30,6 +30,7 @@
                 <VideoPlay />
               </el-icon>
             </div>
+            <div v-bind:class="record ? 'recording' : 'not-recording'"></div>
           </el-button>
         </el-form-item>
       </div>
