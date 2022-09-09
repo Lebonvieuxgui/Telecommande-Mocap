@@ -13,10 +13,8 @@ jobs:
         with:
           target_repo_url:
             git@github.com:eljanvier2/Telecommande-MoCap.git
-            git@github.com:Lebonvieuxgui/Telecommande-Mocap.git
           ssh_private_key:
             ${{ secrets.elliot_key }}
-            ${{ secrets.guillaume_key}}
   to_github_guillaume:
     runs-on: ubuntu-latest
     steps:
