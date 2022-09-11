@@ -4,10 +4,7 @@
       <thead class="script-table-head">
         <tr>
           <th>
-            Notifications<el-button
-              @click="this.show = !this.show"
-              class="deploy-component-btn"
-            >
+            Notifications<el-button @click="this.show = !this.show" class="deploy-component-btn">
               <span v-if="!show">
                 <el-icon>
                   <Plus />
@@ -23,18 +20,10 @@
         </tr>
       </thead>
       <div v-if="show" class="script-table-body">
-        <tbody
-          style="display: flex; vertical-align: middle; position: relative"
-        >
+        <tbody style="display: flex; vertical-align: middle; position: relative">
           <ul>
-            <el-alert
-              center
-              show-icon
-              type="error"
-              effect="dark"
-              v-for="notif in notifications"
-            >
-              {{ notif }}
+            <el-alert center show-icon effect="dark" v-for="notif in notifications" :type=notif.type>
+              {{ notif.name }}
             </el-alert>
           </ul>
         </tbody>
@@ -48,10 +37,22 @@ export default {
   data() {
     return {
       notifications: [
-        "Notification 1",
-        "Notification 2",
-        "Notification 3",
-        "Notification 4",
+        {
+          name: "Notification 1",
+          type: "info"
+        },
+        {
+          name: "Notification 2",
+          type: "warning"
+        },
+        {
+          name: "Notification 3",
+          type: "success"
+        },
+        {
+          name: "Notification 4",
+          type: "error"
+        },
       ],
       show: true,
     };

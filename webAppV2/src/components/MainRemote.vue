@@ -11,7 +11,7 @@
       </div>
       <div class="sequence-group">
         <div class="group1">
-          <el-form-item label="Sequence" style="margin-top: 15px" :label-width="useFormLabelWidth">
+          <el-form-item label="Sequence" style="margin-top: 15px">
             <el-input v-model="form.name" @change="getFilename" />
           </el-form-item>
           <el-form-item label="Take" style="margin-top: 1vw;">
@@ -60,13 +60,6 @@ function indexFormatter(currentIndex) {
 
 const form = reactive({
   name: "",
-  region: "",
-  date1: "",
-  date2: "",
-  delivery: false,
-  type: [],
-  resource: "",
-  desc: "",
 });
 
 const onSubmit = () => {
@@ -139,7 +132,6 @@ export default {
           this.$globalActiveProject = this.selectedProject;
         }
       }
-      console.log(this.selectedProject);
       return this.selectedProject;
     },
   },
