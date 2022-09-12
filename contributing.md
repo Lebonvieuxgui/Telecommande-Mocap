@@ -26,6 +26,7 @@ La norme est la suivante: *git commit -m "[...] Titre clair" -m "Description rap
 - **[FIX]**: Résolution d'un problème préalablement identifié
 - **[MERGE]**: Indique un merge nécesaire (branches Dev et Main uniquement)
 - **[DELETE]**: Suppression de code ou de fonctionnalité
+- **[STYLE]**: Modification visuelle impliquant généralement du CSS
 
 ### Disclaimer
 
