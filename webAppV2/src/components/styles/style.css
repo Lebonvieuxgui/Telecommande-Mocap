@@ -16,6 +16,10 @@
   src: url("../fonts/conthrax-sb.ttf") format("truetype");
 }
 
+::-webkit-scrollbar-corner {
+  background: rgba(0,0,0,0);
+}
+
 body {
   background: #0c0c0c;
 }

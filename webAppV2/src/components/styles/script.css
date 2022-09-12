@@ -19,4 +19,6 @@
   
   .script-table-body {
     margin-top: 1vh;
+    max-height: 15vw;
+    overflow: scroll;
   }
