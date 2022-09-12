@@ -1,0 +1,55 @@
+##### Unreal :
+
+For the script triggering the recording to work, you will have to perform those few steps:
+
+- First, go to the Plugins Manager, Enable "Remote Control API", and restart Unreal.
+
+- Add these lines at the end of DefaultEngine.ini (usually located at "Documents/Unreal Projects/<Name of your project>/Config") :
+	[HTTPServer.Listeners]
+	DefaultBindAddress= <IP Address of your computer>
+  and restart Unreal.
+
+- Then, you need to add a new C++ class to your Unreal project (MyTakeRecorderController.cpp).
+	• Click on File->'New C++ Class'
+	• Select the 'Actor' Parent Class
+	• Type name "MyTakeRecorderController" (otherwise you will need to modify the script and put your classname in the objectPath field of the request's payload)
+	• Create Class
+	• Copy/Paste the content of MyTakeRecorderController.h and MyTakeRecorderController.cpp in your class header and source files
+	  /!\ In the header file, you will need to replace "FACEARSAMPLE" with your project's name
+	• In the file <Name-of-your-project>.Build.cs, add "TakeRecorder", "TakesCore" and "LevelSequence" at the end of PublicDependencyModuleNames.
+	• Then, build the solution, and it's over !
+	• You might need to restart Unreal to have it detect your new class.
+
+- Normally this step is done on its own, but just in case you can manually activate the remote control server: 
+  Go to 'Window' -> 'Developer Tools' -> 'Output log' and enter the command "WebControl.StartServer"
+
+- Open the Take Recorder Panel and make sure the Take Recorder has a Source to record !
+
+- Finally, in the Raspberry's web app "Solidremote" (http://192.168.1.200:3000), replace Start/Stop Command Line Arguments of the script "Unreal" with:
+   • ip : IP address of your computer
+   • port : HTTP Server Port of Unreal (Default : 30010, otherwise look at 'Project Settings'->'Web Remote Control')
+   • projectname : the name of your project
+
+If it does not work, first check the Output Log.
+You can also try to deactivate your computer's firewall on your private network.
+
+
+##### LiveLinkFace :
+
+In the LiveLinkFace apps, go to Settings->OSC and enable OSC. You will also find your device's IP Address and OSC Port (8000 by default).
+Make sure all your devices using LiveLinkFace use the same OSC Port number.
+
+In the Raspberry web app "Solidremote" (http://192.168.1.200:3000), replace Start/Stop Command Line Arguments of the script "LiveLinkFace" with:
+   • ip : your devices' IP addresses, separated with '/' (for example : --ip="192.168.1.197 / 192.168.1.163")
+   • port : the OSC port number (Default : 8000)
+
+
+##### Motionbuilder :
+
+Not much to do here, you just have to make sure there is something to record by putting a device into the scene and check hits box "Recording".
+If recording is not launched, it is probably because of a race condition : in this case, try a bigger sleeping time between sent commands in the "launch" function of the script.
+
+In the Raspberry web app "Solidremote" (http://192.168.1.200:3000), replace Start/Stop Command Line Arguments of the script "Motionbuilder" with:
+   • ip : IP address of your computer
+   • port : Motionbuilder Telnet port number (Default : 4242)
+

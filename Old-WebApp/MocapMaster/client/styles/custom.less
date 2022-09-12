@@ -1,0 +1,109 @@
+@import "defaults.less";
+// OVERRIDES
+
+* {
+  font-family: "Poppins";
+}
+
+btn-bg-default {
+  background-color: @button-default-color;
+}
+
+btn-bg-action {
+  background-color: @button-action-color;
+}
+
+.el-notification.right {
+  right: 56px !important;
+}
+
+.notification {
+  .el-notification__content {
+    margin: 0;
+  }
+}
+
+.el-message--success {
+  top: 6px !important;
+  background-color: @success-color !important;
+  border-color: @default-light-font-color !important;
+
+  .el-message__content {
+    color: @default-light-font-color !important;
+  }
+
+  i {
+    color: @default-light-font-color !important;
+  }
+}
+
+.el-message--error {
+  top: 6px !important;
+  background-color: @error-color !important;
+  border-color: @default-light-font-color !important;
+
+  .el-message__content {
+    color: @default-light-font-color !important;
+  }
+
+  i {
+    color: @default-light-font-color !important;
+  }
+}
+
+.el-tabs--border-card {
+  box-shadow: 0 2px 4px 0 fadeout(@shadow-color, 88%),
+    0 0 6px 0 fadeout(@shadow-color, 96%) !important;
+}
+
+.el-form--label-top .el-form-item__label {
+  background-color: @primary-color-5;
+  color: @default-dark-font-color;
+  border-radius: 5px;
+  padding: 0px 10px 0px 10px !important;
+  margin-bottom: 10px;
+  height: 30px;
+  line-height: 30px;
+  font-weight: bold;
+}
+
+.el-dialog__title {
+  font-size: 32px !important;
+  border-bottom: solid 4px @primary-color-1;
+  width: auto;
+  padding-right: 40px;
+  padding-bottom: 5px;
+}
+
+.el-dialog__title {
+  color: @default-dark-font-color;
+}
+
+.el-collapse-item__header {
+  font-size: 15px !important;
+}
+
+.el-collapse-item__content {
+  padding-bottom: 0;
+}
+
+.el-collapse-item__wrap {
+  padding: 0px 20px 0px 20px;
+}
+
+.el-dialog__headerbtn {
+  border-radius: 30px;
+  border: 1px #909399 solid;
+  color: #909399;
+  // background-color: @primary-color-1;
+  padding: 1px 4px 0px 4px !important;
+}
+
+.el-table--striped .el-table__body tr.el-table__row--striped.current-row td,
+.el-table__body tr.current-row > td,
+.el-table__body tr.hover-row.current-row > td,
+.el-table__body tr.hover-row.el-table__row--striped.current-row > td,
+.el-table__body tr.hover-row.el-table__row--striped > td,
+.el-table__body tr.hover-row > td {
+  background-color: lighten(@primary-color-5, 1%) !important;
+}

@@ -1,0 +1,22 @@
+{
+  "presets": [
+    [
+      "es2015",
+      {
+        "modules": false
+      }
+    ],
+    "stage-2"
+  ],
+  "ignore": ["node_modules/*"],
+  "plugins": [
+    "transform-runtime",
+    [
+      "component",
+      {
+        "libraryName": "element-ui",
+        "styleLibraryName": "custom-theme"
+      }
+    ]
+  ]
+}
