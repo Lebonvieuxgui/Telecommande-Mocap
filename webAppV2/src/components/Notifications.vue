@@ -1,4 +1,5 @@
 <template>
+  <el-badge :type="badgeType" v-if="this.notifications.length > 0" value="ㅤ">
   <el-card shadow="hover" class="list-card">
     <table ref="multipleTableRef">
       <thead class="script-table-head">
@@ -30,13 +31,14 @@
       </div>
     </table>
   </el-card>
+</el-badge>
 </template>
 <script>
 export default {
   name: "Notifications",
   data() {
     return {
-      notifications: [
+      activeNotifications: [
         {
           name: "Notification 1",
           type: "info"
@@ -51,11 +53,35 @@ export default {
         },
         {
           name: "Notification 4",
-          type: "error"
+          type: "success"
         },
       ],
       show: true,
+      badgeType: "success",
     };
   },
+  created() {
+    this.emitter.on("newNotif", () => {
+      this.badgeTypeSelect();
+    })
+  },
+  methods: {
+    badgeTypeSelect() {
+      for (let i in this.activeNotifications) {
+        if (this.activeNotifications[i].type === "error") {
+          this.badgeType = "danger";
+          return "danger";
+        }
+      }
+      this.badgeType = "success";
+      return "success";
+    }
+  },
+  computed: {
+    notifications() {
+      this.badgeTypeSelect();
+      return this.activeNotifications
+    }
+  }
 };
 </script>

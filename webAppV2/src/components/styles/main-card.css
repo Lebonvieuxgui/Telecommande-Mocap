@@ -1,0 +1,28 @@
+
+.MainRemoteCard {
+    box-sizing: border-box;
+    border-color: transparent;
+    border-radius: 21px;
+    background: var(--g);
+    box-shadow: 5px 5px 12px #181818, -5px -5px 12px #484848;
+    font-family: "ethno";
+    color: var(--w);
+    float: left;
+    width: fit-content;
+    height: fit-content;
+  }
+
+.file-info {
+    margin-top: 1vh;
+    border-radius: 10px;
+    background: var(--g);
+    box-shadow: inset 5px 5px 10px #2a2a2a, inset -5px -5px 10px #363636;
+  }
+  
+  .sequence-group {
+    display: flex;
+    justify-content: center;
+    border-radius: 10px;
+    background: var(--g);
+    box-shadow: inset 5px 5px 10px #2a2a2a, inset -5px -5px 10px #363636;
+  }

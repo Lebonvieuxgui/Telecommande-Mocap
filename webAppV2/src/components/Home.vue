@@ -236,4 +236,11 @@ export default {
 
 <style>
 @import "./styles/style.css";
+@import "./styles/record-button.css";
+@import "./styles/project.css";
+@import "./styles/deploy-component-btn.css";
+@import "./styles/script.css";
+@import "./styles/main-card.css";
+@import "./styles/header.css";
+@import "./styles/notifications.css";
 </style>

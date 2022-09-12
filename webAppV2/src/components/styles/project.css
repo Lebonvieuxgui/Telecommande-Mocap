@@ -1,55 +1,63 @@
 .project-table {
-  width: fit-content;
-  height: fit-content;
-}
+    width: fit-content;
+    height: fit-content;
+  }
+  
+  .project-table-body {
+    padding: 10px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:0.5vw;
+  }
+  
+  .project-select {
+    color: red;
+    width: 7vw;
+    max-width: fit-content;
+  }
+  
+  .add-projects {
+    background-color: #007a41;
+    box-shadow: inset 5px 5px 10px #006938, inset -5px -5px 10px #004726;
+    border-color: transparent;
+  }
+  
+  .delete-projects {
+    background-color:#a30023;
+    box-shadow: inset 5px 5px 10px #92001f, inset -5px -5px 10px #5f0014;
+    border-color: transparent;
+  }
 
-.project-table-body {
-  padding: 10px;
-  margin-top: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5vw;
-}
+  .active-project-display {
+    margin-left: 5vw;
+    float: right;
+    color: #79031d;
+    font-size: 30px;
+  }
 
-.project-select {
-  color: red;
-  width: 7vw;
-  max-width: fit-content;
-}
-
-.add-projects {
-  background-color: var(--color5);
-  box-shadow: inset 5px 5px 10px #006938, inset -5px -5px 10px #004726;
-  border-color: transparent;
-}
-.add-projects:focus {
-  background-color: var(--color5);
-  border-color: transparent;
-}
-.add-projects:hover {
-  background-color: var(--color5);
-  border-color: transparent;
-}
-.add-projects:active {
-  background-color: var(--color5);
-  border-color: transparent;
-}
-
-.delete-projects {
-  background-color: #a30023;
-  box-shadow: inset 5px 5px 10px #92001f, inset -5px -5px 10px #5f0014;
-  border-color: transparent;
-}
-.delete-projects:focus {
-  background-color: #a30023;
-  border-color: transparent;
-}
-.delete-projects:hover {
-  background-color: #a30023;
-  border-color: transparent;
-}
-.delete-projects:active {
-  background-color: #a30023;
-  border-color: transparent;
-}
+  .add-projects:focus {
+    background-color: #007a41;
+    border-color: transparent;
+  }
+  .add-projects:hover {
+    background-color: #007a41;
+    border-color: transparent;
+  }
+  .add-projects:active {
+    background-color: #007a41;
+    border-color: transparent;
+  }
+  .delete-projects:focus {
+    background-color: #a30023;
+    border-color: transparent;
+  }
+  .delete-projects:hover {
+    background-color: #a30023;
+    border-color: transparent;
+  }
+  .delete-projects:active {
+    background-color: #a30023;
+    border-color: transparent;
+  }

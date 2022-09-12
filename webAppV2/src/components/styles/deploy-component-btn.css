@@ -1,11 +1,25 @@
 .deploy-component-btn {
     height: 1vw;
     width: 1vw;
+    margin-left: 0.5vw;
     border-color: transparent;
     background: transparent;
+    color: white;
   }
   
   .deploy-component-btn:active {
+    background-color: var(--o);
+    border-color: transparent;
+    color: white;
+  }
+  .deploy-component-btn:hover {
+    background-color: var(--o);
+    border-color: transparent;
+    color: white
+  }
+  .deploy-component-btn:focus {
     background-color: var(--g);
+    border-color: transparent;
+    color: white;
   }
   

@@ -1,0 +1,21 @@
+.home-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "ethno";
+    color: var(--b);
+    font-size: xx-large;
+    box-shadow: 5px 5px 12px #181818, -5px -5px 12px #484848;
+    background-color: var(--o);
+    margin-top: 1vh;
+    border-radius: 5px;
+  }
+
+  .card-header {
+    padding: 5px;
+    margin-bottom: 0px;
+    border-radius: 10px;
+    background: linear-gradient(145deg, #333333, #2b2b2b);
+    box-shadow: 5px 5px 10px #2a2a2a, -5px -5px 10px #363636;
+  }
+  

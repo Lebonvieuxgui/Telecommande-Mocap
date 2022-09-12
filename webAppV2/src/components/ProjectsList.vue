@@ -30,7 +30,7 @@
               </span>
             </el-option>
           </el-select>
-          <el-input-number v-model="num" :min="0" :max="99999" size="large" @change="handleChangeNum"></el-input-number>
+          <el-input-number class='take' v-model="num" :min="0" :max="99999" size="large" @change="handleChangeNum"></el-input-number>
           <span>
             <el-button class="add-projects">
               <el-icon @click="openNewProjectForm" style="color: black;">
