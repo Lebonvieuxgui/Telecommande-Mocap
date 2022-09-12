@@ -15,11 +15,11 @@
             <el-input v-model="form.name" @change="getFilename" />
           </el-form-item>
           <el-form-item label="Take" style="margin-top: 1vw;">
-            <el-input-number v-model="num" :min="1" :max="99999" @change="handleChange" />
+            <el-input-number v-model="num" :min="1" :max="99999" @change="handleChange" class="take"/>
           </el-form-item>
         </div>
         <el-form-item class="record-button">
-          <el-button v-bind:class="record ? 'recording' : 'not-recording'" @click="(record = !record), onSubmit">
+          <el-button v-bind:class="record ? 'recording' : 'not-recording'" @click="(record = !record), onSubmit()">
             <div v-if="record">
               <el-icon>
                 <VideoPause />
@@ -62,15 +62,10 @@ const form = reactive({
   name: "",
 });
 
-const onSubmit = () => {
-  console.log("submit!");
-};
-
 export default {
   data() {
     return {
       form,
-      onSubmit,
       handleChange,
       num,
       record: false,
@@ -102,7 +97,11 @@ export default {
       });
   },
   methods: {
-
+    onSubmit() {
+      if (this.record === false) {
+        this.num++;
+      }
+    },
     // A method that is called when the user types in the sequence name. It takes the current project name,
     // the current index, the sequence name, and the take number and concatenates them together to form a
     // filename.
