@@ -25,7 +25,7 @@ def launch(start, stop, ip, port, takename):
 
 
 def usage():
-    print"""Usage: python sample.py [options]
+    print("""Usage: python sample.py [options]
 Options:
     --start
     --stop
@@ -33,8 +33,7 @@ Options:
     -p | --port(destination port)
     -t | --takename
     -h | --help(this message)
-Example: python sample.py --start --ip='192.168.1.102' --port='6000' --takename 'take001'"""
-
+Example: python sample.py --start --ip='192.168.1.102' --port='6000' --takename 'take001'""")
 
 def main(argv):
     try:

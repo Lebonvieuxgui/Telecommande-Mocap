@@ -10,18 +10,21 @@ import telnetlib
 
 # Motionbuilder Telnet Port : 4242
 
+
 def sendCommand(mbHost, command):
     mbHost.read_until(b'>>>', .01)
     mbHost.write(command)
+
 
 def launch(start, stop, ip, port, takename):
     mbHost = telnetlib.Telnet(ip, port)
 
     sendCommand(mbHost, b"lPlayer = FBPlayerControl()\n")
     sleep(1)
-    
+
     if start is True:
-        sendCommand(mbHost, b"FBSystem().CurrentTake.CopyTake('{}')\n".format(takename))
+        sendCommand(
+            mbHost, b"FBSystem().CurrentTake.CopyTake('{}')\n".format(takename))
         sleep(1)
         sendCommand(mbHost, b"lPlayer.Record(True)\n")
         sleep(1)

@@ -54,12 +54,12 @@ $ python
         try:
             self.firmwareVersion = self.__getFirmwareVersion(versionParam)
         except IOError as e:
-            print "IOError trying to communicate with target in BaseClient constructor"
-            print e
+            print ("IOError trying to communicate with target in BaseClient constructor")
+            print (e)
             raise UnresponsiveTargetError
         except Exception as e:
-            print "Error trying to communicate with target in BaseClient constructor"
-            print e
+            print ("Error trying to communicate with target in BaseClient constructor")
+            print (e)
             raise UnresponsiveTargetError
 
         if self.firmwareVersion < self.encodeVersion(supportedFirmwareVersion):
@@ -113,7 +113,7 @@ $ python
             f.close()
         except urllib2.URLError as e:
             print("Error in getRawParameter()")
-            print e
+            print (e)
             raise UnresponsiveTargetError("There was an error: %r" % e)
         except:
             if f is not None:
@@ -257,7 +257,7 @@ $ python
                     rawParams = self.asPython(response[1])
                     self.rawParametersCache = rawParams
                 except:
-                    print "Could not parse param list!"
+                    print ("Could not parse param list!")
                     raise
         return rawParams
 
@@ -397,11 +397,11 @@ $ python
             raise UnsupportedFirmwareVersionError
         except UnresponsiveTargetError as e:
             print("UnresponsiveTargetError in kipro Client constructor")
-            print e
+            print (e)
             raise UnresponsiveTargetError
         except Exception as e:
             print("Error in Client constructor")
-            print e
+            print (e)
             raise UnresponsiveTargetError
 
     def getTimecodeWithSynchronousCall(self):
@@ -561,30 +561,30 @@ $ python
 
 
 def usage():
-    print"""Usage: ./kipro [options]
+    print("""Usage: ./kipro [options]
 Options:
     --start
     --stop
     -u | --url(URL of Ki-Pro unit)
     -t | --takename
     -h | --help(this message)
-Example: ./kipro --start --url='192.168.1.102' --takename='take001'"""
+Example: ./kipro --start --url='192.168.1.102' --takename='take001'""")
 
 
 def demo(url, start, takename):
     """ Demonstrates how to use the client and grabs some useful information. """
     client = Client(url)
 
-    if start is True and takename is not "":
+    if start is True and takename != "":
         client.setParameter("eParamID_UseCustomClipName", 1)
         client.setParameter("eParamID_CustomClipName", takename)
 
     if start is True:
         client.record()
-        print "kipro has started"
+        print ("kipro has started")
     else:
         client.stop()
-        print "kipro has stopped"
+        print ("kipro has stopped")
 
 
 def main(argv):
@@ -617,9 +617,9 @@ def main(argv):
         usage()
         sys.exit()
     else:
-        print url
-        print start
-        print takename - "_1"
+        print (url)
+        print (start)
+        print (takename - "_1")
         demo(url, start, takename)
 
 
@@ -664,9 +664,9 @@ class TimecodeListener(threading.Thread):
                     if (event["param_id"] == "eParamID_DisplayTimecode"):
                         self.__setTimecode(event["str_value"])
                         break
-            print "Listener stopping."
+            print ("Listener stopping.")
         else:
-            print "Failed to connect to", self.url
+            print ("Failed to connect to"), self.url
 
     def stop(self):
         """ Tell the listener to stop listening and the thread to exit. """

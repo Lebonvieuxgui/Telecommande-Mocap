@@ -10,25 +10,25 @@ def launch(start, stop, url, port, takename):
     if start is True:
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # UDP
         sock.sendto("START "+takename, (url, port))
-        print "OK"
+        print ("OK")
     # script doesn't have a stop function
     if stop is True:
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # UDP
         sock.sendto("STOP", (url, port))
-        print "OK"
-        
+        print ("OK")
+
     return
 
 
 def usage():
-    print"""Usage: ./ZDTransformOffsetLog [options]
+    print("""Usage: ./ZDTransformOffsetLog [options]
 Options:
     --start
     --stop
     -u | --url(URL of destination)
     -t | --takename
     -h | --help(this message)
-Example: python ZDTransformOffsetLog --start --url='192.168.1.102' --port='6000' --takename 'prise001'"""
+Example: python ZDTransformOffsetLog --start --url='192.168.1.102' --port='6000' --takename 'prise001'""")
 
 
 def main(argv):
@@ -61,11 +61,11 @@ def main(argv):
             stop = True
 
     if url is None or port is None or start + stop != 1 or takename is None:
-        print url
-        print port
-        print start
-        print stop
-        print takename
+        print (url)
+        print (port)
+        print (start)
+        print (stop)
+        print (takename)
         usage()
         sys.exit()
     else:

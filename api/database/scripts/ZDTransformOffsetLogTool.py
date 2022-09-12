@@ -12,7 +12,7 @@ def launch(start, stop, url, port, takename):
 
         sock.sendto(takename, (url, port))
 
-        print "OK"
+        print ("OK")
 
 # script doesn't have a stop function
     if stop is True:
@@ -20,7 +20,7 @@ def launch(start, stop, url, port, takename):
 
 
 def usage():
-    print"""Usage: ./ZDTransformOffsetLog [options]
+    print("""Usage: ./ZDTransformOffsetLog [options]
 Options:
     --start
     --stop
@@ -28,7 +28,7 @@ Options:
     -t | --takename
     -h | --help(this message)
 Example: python ZDTransformOffsetLog --start --url='192.168.1.102' --port='6000' --takename 'prise001'"""
-
+)
 
 def main(argv):
     try:
@@ -60,11 +60,11 @@ def main(argv):
             stop = True
 
     if url is None or port is None or start + stop != 1 or takename is None:
-        print url
-        print port
-        print start
-        print stop
-        print takename
+        print (url)
+        print (port)
+        print (start)
+        print (stop)
+        print (takename)
         usage()
         sys.exit()
     else:
