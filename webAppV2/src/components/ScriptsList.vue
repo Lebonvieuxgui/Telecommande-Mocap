@@ -26,8 +26,8 @@
       <div v-if="show" class="script-table-body">
         <tbody>
           <el-checkbox-group v-model="selectedScripts">
-            <el-checkbox v-for="script in activeScripts" :key="script.name" :label="script.name" class="CheckboxScripts" @change="selectChange(script)">
-              {{ script.name}}
+            <el-checkbox v-for="script in activeScripts" :key="script" :value="script" :label="script" class="CheckboxScripts" @change="selectChange(script)">
+              {{ script.name }}
               <el-button size="small" text @click="selectScript(script.name, activeScripts)"
                 v-on:click="openEditScript">
                 <el-icon>
@@ -89,11 +89,13 @@ export default {
     selectChange(script) {
       console.log(this.selectedScripts);
     },
+
     // This is a method that is called when the user clicks on the edit button. It emits an event called
     // openEditScript and passes the selectedScript as a parameter.
     openEditScript() {
       this.emitter.emit("openEditScript", this.selectedScript);
     },
+
     // This method is called when the user clicks on the checkbox in the header of the table. It checks if
     // the checkbox is checked or not and if it is checked it assigns the id of each script to the
     // selectedScripts variable. If the checkbox is not checked it assigns an empty array to the
@@ -108,6 +110,7 @@ export default {
       }
       console.log(this.selectedScripts);
     },
+
     // A method that is called when the user clicks on the save button. It fetches the data from the server
     // and assigns it to the activeScripts variable.
     reloadScripts() {
@@ -115,6 +118,7 @@ export default {
       const newData = JSON.stringify(data);
       this.activeScripts = newData;
     },
+
     // A method that is called when the user clicks on the edit button. It emits an event called
     // // openEditScript and passes the selectedScript as a parameter.
     selectScript(name, activeScripts) {
@@ -136,6 +140,7 @@ export default {
         };
       }
     },
+
     // A method that is called when the user clicks on the save button. It sends changes made to selected script to the server
     postChanges() {
       let newData = this.selectedScript;
