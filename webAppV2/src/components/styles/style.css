@@ -300,6 +300,17 @@ body {
   border-color: transparent;
 }
 
+.take {
+  color: black;
+}
+
+.active-project-display {
+  margin-left: 5vw;
+  float: right;
+  color: #79031d;
+  font-size: 30px;
+}
+
 /* a {
   position: absolute;
   width: 100px;

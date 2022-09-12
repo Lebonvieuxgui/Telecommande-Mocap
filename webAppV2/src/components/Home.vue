@@ -3,15 +3,7 @@
     <div class="common-layout">
       <el-header class="home-header">SolidRemote
         <div class="active-project-display" v-if="selectedProject !== null">
-          <div></div>
-          <span style="
-              margin-left: 50px;
-              float: right;
-              color: #79031d;
-              font-size: 30px;
-            ">
             {{ this.selectedProject.name }}
-          </span>
         </div>
       </el-header>
       <el-main>
