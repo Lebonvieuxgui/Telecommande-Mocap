@@ -26,7 +26,8 @@
       <div v-if="show" class="script-table-body">
         <tbody>
           <el-checkbox-group v-model="selectedScripts">
-            <el-checkbox v-for="script in activeScripts" :key="script" :value="script" :label="script" class="CheckboxScripts" @change="selectChange(script)">
+            <el-checkbox v-for="script in activeScripts" :key="script" :value="script" :label="script"
+              class="CheckboxScripts" @change="selectChange(script)">
               {{ script.name }}
               <el-button size="small" text @click="selectScript(script.name, activeScripts)"
                 v-on:click="openEditScript">
@@ -77,17 +78,37 @@ export default {
     let self = this;
 
     // Fetching data from the server and assigning it to the activeScripts and loadedExecs variables.
-    const scriptData = fetch("http://localhost:3000/scripts");
-    const execData = fetch("http://localhost:3000/execs");
-    const res = await Promise.all([scriptData, execData])
-    const newScriptData = await res[0].json();
-    const newExecData = await res[1].json();
+    const scriptData = await fetch("http://localhost:3000/scripts");
+    const execData = await fetch("http://localhost:3000/execs");
+    const newScriptData = await scriptData.json();
+    const newExecData = await execData.json();
     this.activeScripts = newScriptData;
     this.loadedExecs = newExecData;
+    this.checkScriptExecutables()
   },
   methods: {
+    checkScriptExecutables() {
+      console.log("ehoo")
+      let check = 0;
+      for (let script of this.activeScripts) {
+        check = 0;
+        for (let exec of this.loadedExecs) {
+          if (this.activeScripts[script].executableName === this.loadedExecs[exec].name) {
+            check = 1;
+          }
+        }
+        if (check = 0) {
+          let newNotif = {
+            name: this.activeScripts[script].executableName + "has no valid executable in launchScripts folder",
+            type: "error",
+            index: 0
+          }
+          this.emitter.emit("errorNotification", newNotif)
+        }
+      }
+    },
     selectChange(script) {
-      console.log(this.selectedScripts);
+      this.emitter.emit("scriptSelectionChange", this.selectedScripts);
     },
 
     // This is a method that is called when the user clicks on the edit button. It emits an event called
@@ -108,7 +129,7 @@ export default {
       } else {
         this.selectedScripts = [];
       }
-      console.log(this.selectedScripts);
+      this.emitter.emit("scriptSelectionChange", this.selectedScripts);
     },
 
     // A method that is called when the user clicks on the save button. It fetches the data from the server

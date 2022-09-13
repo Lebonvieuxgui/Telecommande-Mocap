@@ -23,6 +23,7 @@ app.use(express.json())
 will send a response with a status of 200 and the json object
 `projects`. */
 app.get('/projects', (req, res) => {
+    console.log("get");
     res.status(200).json(projects);
 });
 

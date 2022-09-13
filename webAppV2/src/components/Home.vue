@@ -137,9 +137,9 @@ export default {
     return {
       componentNames: [
         { name: "MainRemote", x: 0, y: 0, w: 100, h: 31, i: "0", },
-        { name: "Notifications", x: 105, y: 0, w: 33, h: 28, i: "3", },
-        { name: "ProjectsList", x: 143, y: 0, w: 36, h: 23, i: "1", },
-        { name: "ScriptsList", x: 182, y: 0, w: 38, h: 27, i: "2", },
+        { name: "ScriptsList", x: 110, y: 0, w: 38, h: 27, i: "2", },
+        { name: "Notifications", x: 153, y: 0, w: 33, h: 28, i: "3", },
+        { name: "ProjectsList", x: 191, y: 0, w: 36, h: 23, i: "1", },
       ],
       activeProjects: [],
       selectedProject: null,
@@ -149,21 +149,16 @@ export default {
       newProjectFormVisible,
       formLabelWidth,
       loadedExecs: [],
-      activeScripts: [],
       showConfirmDelete: false,
     };
   },
   async mounted() {
     let self = this;
     // Fetching data from the server.
-    const projectData = fetch("http://localhost:3000/projects");
-    const scriptData = fetch("http://localhost:3000/scripts");
-    const execData = fetch("http://localhost:3000/execs");
-    const res = await Promise.all([scriptData, execData, projectData]);
-    const newScriptData = await res[0].json();
-    const newExecData = await res[1].json();
-    const newProjectData = await res[2].json();
-    this.activeScripts = newScriptData;
+    const projectData = await fetch("http://localhost:3000/projects");
+    const execData = await fetch("http://localhost:3000/execs");
+    const newExecData = await execData.json();
+    const newProjectData = await projectData.json();
     this.loadedExecs = newExecData;
     this.activeProjects = newProjectData;
 

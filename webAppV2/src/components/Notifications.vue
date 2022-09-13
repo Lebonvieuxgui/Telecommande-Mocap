@@ -42,17 +42,17 @@ export default {
       activeNotifications: [
         {
           name: "Notification 1",
-          type: "info",
+          type: "success",
           index: "1"
         },
         {
           name: "Notification 2",
-          type: "warning",
+          type: "success",
           index: "2"
         },
         {
           name: "Notification 3",
-          type: "success",
+          type: "error",
           index: "3"
         },
         {
@@ -69,9 +69,20 @@ export default {
   created() {
     this.emitter.on("newNotif", () => {
       this.badgeTypeSelect();
+    }),
+    this.emitter.on("errorNotification", (evt) => {
+      this.receivedNotif(evt);
     })
   },
   methods: {
+    receivedNotif(notifContent) {
+      let newNotif = {
+        name: evt.name,
+        type: evt.type,
+        index: this.activeNotifications.length + 1
+      }
+      this.activeNotifications.push(newNotif);
+    },
     addNotif() {
       let newNotif = {
         name: "prout",

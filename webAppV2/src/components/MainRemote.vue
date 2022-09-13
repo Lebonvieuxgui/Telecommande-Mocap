@@ -4,7 +4,7 @@
     <el-form :model="form" label-width="200px">
       <div class="file-info">
         <el-form-item label="File Name" style="margin-top: 30px">
-          <div v-if="this.selectedProject.id !== 0">{{ getFilename() }}</div>
+          <div v-if="this.activeProject.id !== 0">{{ getFilename() }}</div>
           <div v-else>null_FILENAME</div>
         </el-form-item>
         <el-form-item label="Duration">00:00:0</el-form-item>
@@ -72,12 +72,13 @@ export default {
       takeIndex: 0,
       sequenceName: "",
       filename: "",
-      selectedProject: {
+      activeProject: {
         id: 0,
         name: "",
         currentIndex: 0,
         current: false,
       },
+      selectedProjects: []
     };
   },
 
@@ -90,26 +91,31 @@ export default {
   // selectedProject to the event.
   created() {
     this.emitter.on("updateActiveProject", (evt) => {
-      this.selectedProject = evt;
+      this.activeProject = evt;
     });
     this.emitter.on("refreshProject", () => {
       this.refreshProject();
-      });
+    });
+    this.emitter.on("scriptSelectionChange", (evt) => {
+      this.selectedProjects = evt;
+      console.log(this.selectedProjects)
+    })
   },
   methods: {
     onSubmit() {
       if (this.record === false) {
         this.num++;
       }
+      console.log(this.$globalSelectedScripts)
     },
     // A method that is called when the user types in the sequence name. It takes the current project name,
     // the current index, the sequence name, and the take number and concatenates them together to form a
     // filename.
     getFilename() {
-      let currentIndex = indexFormatter(this.selectedProject.currentIndex);
+      let currentIndex = indexFormatter(this.activeProject.currentIndex);
 
       this.$globalFilename =
-        this.selectedProject.name +
+        this.activeProject.name +
         "_" +
         currentIndex +
         "_" +
@@ -127,11 +133,11 @@ export default {
       this.activeProjects = newData;
       for (let i = 0; i < this.activeProjects.length; i++) {
         if (this.activeProjects[i].current === true) {
-          this.selectedProject = this.activeProjects[i];
-          this.$globalActiveProject = this.selectedProject;
+          this.activeProject = this.activeProjects[i];
+          this.$globalActiveProject = this.activeProject;
         }
       }
-      return this.selectedProject;
+      return this.activeProject;
     },
   },
 };
