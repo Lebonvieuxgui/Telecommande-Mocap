@@ -1,7 +1,6 @@
 import sys
 import threading
 import urllib
-import urllib2
 import json
 import socket
 

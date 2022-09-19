@@ -106,6 +106,15 @@ export default {
       if (this.record === false) {
         this.num++;
       }
+      const requestOptions = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "*/*",
+          Connection: "keep-alive",
+        },
+      };
+      fetch("http://localhost:3000/scripts", requestOptions);
       console.log(this.$globalSelectedScripts)
     },
     // A method that is called when the user types in the sequence name. It takes the current project name,

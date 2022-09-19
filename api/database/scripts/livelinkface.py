@@ -5,8 +5,7 @@ import urllib
 import json
 import socket
 from time import time
-import OSC
-
+import pythonosc
 # Default OSC Port : 8000
 
 

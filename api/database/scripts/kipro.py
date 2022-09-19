@@ -8,7 +8,6 @@ __license__ = "Proprietary"
 import sys
 import threading
 import urllib
-import urllib2
 import json
 import re  # "now you have two problems" -- jwz
 
@@ -107,11 +106,11 @@ $ python
         result = (None, "")
         f = None
         try:
-            req = urllib2.Request(url=self.url + '/options?' + param_id)
-            f = urllib2.urlopen(req, timeout=5)
+            req = urllib.Request(url=self.url + '/options?' + param_id)
+            f = urllib.urlopen(req, timeout=5)
             result = (f.getcode(), f.read())
             f.close()
-        except urllib2.URLError as e:
+        except urllib.URLError as e:
             print("Error in getRawParameter()")
             print (e)
             raise UnresponsiveTargetError("There was an error: %r" % e)
@@ -204,7 +203,7 @@ $ python
         """
         This is primarily used to get timecode.
         """
-        events_stream = urllib2.urlopen(
+        events_stream = urllib.urlopen(
             self.url + "/json?action=wait_for_config_events&configid=0&connectionid=%s" % connectionid, timeout=5)
         if (events_stream.getcode() == self.__success):
             events_json = events_stream.read()
@@ -217,7 +216,7 @@ $ python
         This is only used for listening for event streams (primarily timecode).
         """
         result = None
-        connect_stream = urllib2.urlopen(
+        connect_stream = urllib.urlopen(
             self.url + "/json?action=connect&configid=0", timeout=5)
         if (connect_stream.getcode() == self.__success):
             connect_json = connect_stream.read()
@@ -243,7 +242,7 @@ $ python
             f = None
             try:
                 # It can take longer than 5 seconds to get all of the Descriptors.
-                f = urllib2.urlopen(
+                f = urllib.urlopen(
                     self.url + '/descriptors?paramid=*', timeout=30)
                 response = (f.getcode(), f.read())
                 f.close()
@@ -520,7 +519,7 @@ $ python
         response = ""
         f = None
         try:
-            f = urllib2.urlopen(
+            f = urllib.urlopen(
                 self.url + '/clips?action=get_playlists', timeout=5)
             (code, response) = (f.getcode(), f.read())
             f.close()

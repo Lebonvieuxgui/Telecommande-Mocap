@@ -7,6 +7,8 @@ const scripts = require("./database/data/launchScripts.json");
 const execs = require("./database/data/execs.json");
 const update = require("./database/utilities/updateFile.js");
 const execLoad = require("./database/utilities/loadExecs.js");
+const {spawn} = require('child_process');
+
 
 /* Allowing the server to be accessed from the localhost. */
 var corsOptions = {
@@ -117,7 +119,16 @@ app.get('/scripts/:id', (req, res) => {
 push the request body to the scripts array and send a response with a status of 200 and the json
 object `scripts`. */
 app.post('/scripts', (req,res) => {
-    scripts.push(req.body);
+    var dataToSend;
+    const python = spawn('python', ['./database/scripts/test.py']);
+    python.stdout.on('data', function (data) {
+        console.log('Pipe data from python script ...');
+        dataToSend = data.toString();
+    });
+    python.on('close', (code) => {
+        console.log(`child process close all stdio with code ${code}`);
+        console.log(dataToSend);
+    });
     res.status(200).json(scripts);
 });
 
