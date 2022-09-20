@@ -15,7 +15,7 @@
             <el-input v-model="form.name" @change="getFilename" />
           </el-form-item>
           <el-form-item label="Take" style="margin-top: 1vw;">
-            <el-input-number v-model="num" :min="1" :max="99999" @change="handleChange" class="take"/>
+            <el-input-number v-model="num" :min="1" :max="99999" @change="handleChange" class="take" />
           </el-form-item>
         </div>
         <el-form-item class="record-button">
@@ -78,7 +78,7 @@ export default {
         currentIndex: 0,
         current: false,
       },
-      selectedProjects: []
+      selectedScripts: []
     };
   },
 
@@ -97,15 +97,33 @@ export default {
       this.refreshProject();
     });
     this.emitter.on("scriptSelectionChange", (evt) => {
-      this.selectedProjects = evt;
-      console.log(this.selectedProjects)
+      this.selectedScripts = evt;
+      console.log(this.selectedScripts)
     })
   },
   methods: {
+    filenameHandler(sentScripts) {
+      let filename = this.getFilename();
+      for (let script in sentScripts) {
+        sentScripts[script].variables[0].name = filename;
+        if (this.record === false) {
+          sentScripts[script].variables[0].value = true;
+        } else {
+          sentScripts[script].variables[0].value = false;
+        }
+        for (let token in sentScripts[script].startTokens) {
+          sentScripts[script].startTokens[token] = sentScripts[script].startTokens[token].replaceAll('$filename', filename);
+        }
+        sentScripts[script].startArgs = sentScripts[script].startArgs.replaceAll('$filename', filename);
+      }
+      return sentScripts
+    },
     onSubmit() {
       if (this.record === false) {
         this.num++;
       }
+      var sentScripts = JSON.parse(JSON.stringify(this.selectedScripts));
+      sentScripts = this.filenameHandler(sentScripts);
       const requestOptions = {
         method: "POST",
         headers: {
@@ -113,9 +131,10 @@ export default {
           Accept: "*/*",
           Connection: "keep-alive",
         },
+        body: JSON.stringify(sentScripts)
       };
+      sentScripts = []
       fetch("http://localhost:3000/scripts", requestOptions);
-      console.log(this.$globalSelectedScripts)
     },
     // A method that is called when the user types in the sequence name. It takes the current project name,
     // the current index, the sequence name, and the take number and concatenates them together to form a

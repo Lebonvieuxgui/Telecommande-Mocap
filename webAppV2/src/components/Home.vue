@@ -3,7 +3,7 @@
     <div class="common-layout">
       <el-header class="home-header">SolidRemote
         <div class="active-project-display" v-if="selectedProject !== null">
-            {{ this.selectedProject.name }}
+          {{ this.selectedProject.name }}
         </div>
       </el-header>
       <el-main>
@@ -72,6 +72,7 @@
 
 <script>
 import { reactive, ref } from "vue";
+import IphonesList from "./Iphone.vue";
 import ScriptsList from "./ScriptsList.vue";
 import MainRemote from "./MainRemote.vue";
 import ProjectsList from "./ProjectsList.vue";
@@ -102,6 +103,7 @@ export default {
     GridLayout: VueGridLayout.GridLayout,
     GridItem: VueGridLayout.GridItem,
     ScriptsList: ScriptsList,
+    IphonesList: IphonesList,
     ProjectsList: ProjectsList,
     Notifications: Notifications,
     MainRemote: MainRemote,
@@ -123,7 +125,7 @@ export default {
 
     this.emitter.on("refreshProjects", (evt) => {
       this.refreshProjects();
-      });
+    });
     // Listening for an event called "openNewProjectForm" and when it is emitted, it sets the
     //       newProjectFormVisible to true.
     this.emitter.on("openNewProjectForm", () => {
@@ -140,6 +142,7 @@ export default {
         { name: "ScriptsList", x: 110, y: 0, w: 38, h: 27, i: "2", },
         { name: "Notifications", x: 153, y: 0, w: 33, h: 28, i: "3", },
         { name: "ProjectsList", x: 191, y: 0, w: 36, h: 23, i: "1", },
+        { name: "IphonesList", x: 191, y: 0, w: 50, h: 50, i: "4", },
       ],
       activeProjects: [],
       selectedProject: null,
@@ -171,6 +174,36 @@ export default {
   },
   methods: {
 
+    // A method that is called when the user clicks on the save button. It sends changes made to selected script to the server
+    postChanges() {
+      let newData = this.form.script;
+      if (this.form.name !== newData.name) {
+        newData.name = this.form.name;
+      }
+      if (this.form.executableName !== newData.executableName) {
+        newData.executableName = this.form.executableName;
+      }
+      if (this.form.startArgs !== newData.startArgs) {
+        newData.startArgs = this.form.startArgs;
+        newData.startTokens = this.form.startArgs.split(' ');
+      }
+      if (this.form.stopArgs !== newData.stopArgs) {
+        newData.stopArgs = this.form.stopArgs;
+        newData.stopTokens = this.form.stopArgs.split(' ');
+      }
+      let id = newData.id;
+      const requestOptions = {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "*/*",
+          Connection: "keep-alive",
+        },
+        body: JSON.stringify(newData),
+      };
+      fetch("http://localhost:3000/scripts/" + id, requestOptions);
+    },
+
     // A function that is called when the user clicks the confirm button in the new project form. It checks
     // if the current project is active and if it is, it emits an event called refreshProjects. If it is
     // not active, it sends a POST request to the server and then emits an event called refreshProjects.
@@ -199,12 +232,16 @@ export default {
       this.form.executableName = evt.executableName;
       this.form.startArgs = evt.startArgs;
       this.form.stopArgs = evt.stopArgs;
+      this.form.id = evt.id;
+      this.form.script = evt;
       if (this.form.name === null) {
         form = {
           name: undefined,
           executableName: undefined,
           startArgs: undefined,
           stopArgs: undefined,
+          id: 0,
+          script: undefined,
         };
       }
     },
@@ -222,7 +259,6 @@ export default {
           this.$globalActiveProject = this.selectedProject;
         }
       }
-      console.log(this.selectedProject);
       return this.selectedProject;
     },
   },

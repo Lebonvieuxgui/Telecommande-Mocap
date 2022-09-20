@@ -111,7 +111,6 @@ export default {
       let tmp = this.selected;
       let tmp2;
       while (tmp === this.selected) {
-        console.log(this.selected)
         tmp2 = this.activeProjects.find(element => element.current === true)
         console.log(tmp2)
         this.selected = tmp2.id
@@ -216,7 +215,6 @@ export default {
     },
 
     async deleteProject() {
-      console.log(this.activeProject)
       let id = this.activeProject.id;
       let requestOptions = {
         method: 'DELETE',

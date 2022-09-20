@@ -5,32 +5,32 @@ import urllib
 import json
 import socket
 from time import time
-import pythonosc
+
+from pythonosc.udp_client import SimpleUDPClient
 # Default OSC Port : 8000
 
 
 def launch(start, stop, ip, port, takename):
-    ip.replace(' ', '')
+    #ip.replace(' ', '')
     ip = ip.split('/')
 
     if start is True:
         for i in ip:
-            c = OSC.OSCClient()
-            c.connect((i, port))
-            oscmsg = OSC.OSCMessage("/RecordStart")
-            oscmsg.append(takename)
-            oscmsg.append(0)
-            c.send(oscmsg)
-            print("Sent " + str(oscmsg) + " to " + i)
+            print(i)
+            c = SimpleUDPClient(i, port)
+            msg = ["/RecordStart"]
+            msg.append(takename)
+            msg.append(0)
+            c.send_message(i, msg)
+            print("Sent " + str(msg) + " to " + i)
 
     if stop is True:
         for i in ip:
-            c = OSC.OSCClient()
-            c.connect((i, port))
-            oscmsg = OSC.OSCMessage("/RecordStop")
-            oscmsg.append(0)
-            c.send(oscmsg)
-            print("Sent " + str(oscmsg) + " to " + i)
+            c = SimpleUDPClient(i, port)
+            msg = ["/RecordStop"]
+            msg.append(0)
+            c.send_message(i, msg)
+            print("Sent " + str(msg) + " to " + i)
 
 
 def usage():

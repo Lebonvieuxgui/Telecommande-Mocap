@@ -15,7 +15,7 @@
         "id": 3,
         "name": "msp",
         "currentIndex": 5,
-        "current": false
+        "current": true
     },
     {
         "id": 4,
@@ -27,7 +27,7 @@
         "id": 5,
         "name": "test",
         "currentIndex": 93,
-        "current": true
+        "current": false
     },
     {
         "id": 6,

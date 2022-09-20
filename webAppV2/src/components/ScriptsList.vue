@@ -84,9 +84,19 @@ export default {
     const newExecData = await execData.json();
     this.activeScripts = newScriptData;
     this.loadedExecs = newExecData;
+    this.phoneIpGrabber();
     this.checkScriptExecutables()
   },
   methods: {
+    phoneIpGrabber() {
+      const Iphones = this.activeScripts.find(project => project.name === "LiveLinkFace");
+      let IphonesIP = Iphones.startTokens[1];
+      IphonesIP = IphonesIP.split("'")
+      IphonesIP.splice(0, 1)
+      IphonesIP.splice(IphonesIP.length - 1, 1)
+      IphonesIP = IphonesIP[0].split("/")
+      this.emitter.emit("IphonesIP", IphonesIP)
+    },
     checkScriptExecutables() {
       console.log("ehoo")
       let check = 0;
@@ -138,6 +148,9 @@ export default {
       const data = fetch("http://localhost:3000/scripts");
       const newData = JSON.stringify(data);
       this.activeScripts = newData;
+      const Iphones = this.activeScripts.find(project => project.name === "LiveLinkFace");
+      this.phoneIpGrabber();
+      this.checkScriptExecutables()
     },
 
     // A method that is called when the user clicks on the edit button. It emits an event called
@@ -160,34 +173,6 @@ export default {
           stopArgs: undefined,
         };
       }
-    },
-
-    // A method that is called when the user clicks on the save button. It sends changes made to selected script to the server
-    postChanges() {
-      let newData = this.selectedScript;
-      if (this.form.name !== newData.name) {
-        newData.name = this.form.name;
-      }
-      if (this.form.executableName !== newData.executableName) {
-        newData.executableName = this.form.executableName;
-      }
-      if (this.form.startArgs !== newData.startArgs) {
-        newData.startArgs = this.form.startArgs;
-      }
-      if (this.form.stopArgs !== newData.stopArgs) {
-        newData.stopArgs = this.form.stopArgs;
-      }
-      let id = newData.id;
-      const requestOptions = {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "*/*",
-          Connection: "keep-alive",
-        },
-        body: JSON.stringify(newData),
-      };
-      fetch("http://localhost:3000/scripts/" + id, requestOptions);
     },
   },
 };

@@ -2,7 +2,7 @@
     {
     "id":1,
     "variables":[{"name":"$filename","value":null}],
-    "startTokens":["--takename=$filename","--start","--url=http://192.168.1.100",""],
+    "startTokens":["--takename=$filename","--start","--url=http://192.168.1.100"],
     "stopTokens":["--stop","--url=http://192.168.1.100"],
     "name":"Kipro mini",
     "executableName":"kipro",
@@ -32,18 +32,18 @@
     {
     "id":4,
     "variables":[{"name":"$filename","value":null}],
-    "startTokens":["--start","--ip='192.168.185'","--port='4242'","--takename=$filename"],
-    "stopTokens":["--stop","--ip='192.168.1.185'","--port='4242'"],
+    "startTokens":["--start","--ip='192.168.185'","--port=4242","--takename=$filename"],
+    "stopTokens":["--stop","--ip='192.168.1.185'","--port=4242"],
     "name":"Motionbuilder",
     "executableName":"motionbuilder.py",
-    "startArgs":"--start --ip='192.168.185' --port='4242' --takename=\"$filename\"",
-    "stopArgs":"--stop --ip='192.168.1.185' --port='4242'"
+    "startArgs":"--start --ip='192.168.185' --port=4242 --takename=\"$filename\"",
+    "stopArgs":"--stop --ip='192.168.1.185' --port=4242"
     },
     {
     "id":5,
     "variables":[{"name":"$filename","value":null}],
-    "startTokens":["--start","--ip='192.168.1.213/192.168.1.130'","--port=8000","--takename=$filename"],
-    "stopTokens":["--stop","--ip='192.168.1.213/192.168.1.130'","--port=8000"],
+    "startTokens":["--start","--ip=192.168.1.213/192.168.1.130","--port=8000","--takename=$filename"],
+    "stopTokens":["--stop","--ip=192.168.1.213/192.168.1.130","--port=8000"],
     "name":"LiveLinkFace",
     "executableName":"livelinkface.py",
     "startArgs":"--start --ip='192.168.1.213/192.168.1.130' --port=8000 --takename=\"$filename\"",
@@ -52,7 +52,7 @@
     {
     "id":6,
     "variables":[{"name":"$filename","value":null}],
-    "startTokens":["--start","--ip='192.168.1.97'","--port='30010'","--takename=$filename","--projectname=Schirkoa"],
+    "startTokens":["--start","--ip='192.168.1.97'","--port=30010","--takename=$filename","--projectname=Schirkoa"],
     "stopTokens":["--stop","--ip='192.168.1.97'","--port='30010'","--projectname=Schirkoa"],
     "name":"Unreal",
     "executableName":"unreal.py",
