@@ -16,7 +16,7 @@ def sendCommand(mbHost, command):
 
 
 def launch(start, stop, ip, port, takename):
-    mbHost = telnetlib.Telnet(ip, port)
+    mbHost = telnetlib.Telnet(str(ip), port)
 
     sendCommand(mbHost, b"lPlayer = FBPlayerControl()\n")
     sleep(1)

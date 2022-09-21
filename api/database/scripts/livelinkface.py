@@ -9,7 +9,6 @@ from time import time
 from pythonosc.udp_client import SimpleUDPClient
 # Default OSC Port : 8000
 
-
 def launch(start, stop, ip, port, takename):
     #ip.replace(' ', '')
     ip = ip.split('/')

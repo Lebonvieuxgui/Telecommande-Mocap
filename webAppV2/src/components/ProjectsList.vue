@@ -141,6 +141,10 @@ export default {
     updateActiveProject() {
       this.emitter.emit('updateActiveProject', this.selectedProject)
     },
+
+
+    // This method is called when the user clicks the delete button. It emits an event called
+    // confirmProjectDelete. This event is listened for in the main.ts file.
     confirmProjectDelete() {
       this.emitter.emit("confirmProjectDelete", this.selectedProject);
     },

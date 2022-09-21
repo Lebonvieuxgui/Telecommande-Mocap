@@ -78,7 +78,8 @@ export default {
         currentIndex: 0,
         current: false,
       },
-      selectedScripts: []
+      selectedScripts: [],
+      activeIps: []
     };
   },
 
@@ -99,9 +100,14 @@ export default {
     this.emitter.on("scriptSelectionChange", (evt) => {
       this.selectedScripts = evt;
       console.log(this.selectedScripts)
+    });
+    this.emitter.on("iphoneSelectionChange", (evt) => {
+      this.activeIps = evt;
     })
   },
   methods: {
+    // A function that takes an array of objects and replaces the value of a property in each object with a
+    // new value.
     filenameHandler(sentScripts) {
       let filename = this.getFilename();
       for (let script in sentScripts) {
@@ -114,10 +120,25 @@ export default {
         for (let token in sentScripts[script].startTokens) {
           sentScripts[script].startTokens[token] = sentScripts[script].startTokens[token].replaceAll('$filename', filename);
         }
+        // Adding the active IP addresses to the startTokens and stopTokens arrays if the script is named LiveLinkFace.
+        if (sentScripts[script].name === 'LiveLinkFace') {
+          sentScripts[script].startTokens[1] = '--ip=';
+          sentScripts[script].stopTokens[1] = '--ip=';
+          for (let ip in this.activeIps) {
+            sentScripts[script].startTokens[1] += this.activeIps[ip];
+            sentScripts[script].stopTokens[1] += this.activeIps[ip];
+            if (this.activeIps[ip] != this.activeIps[this.activeIps.length - 1]) {
+              sentScripts[script].startTokens[1] += '/';
+              sentScripts[script].stopTokens[1] += '/';
+            }
+          }
+        }
         sentScripts[script].startArgs = sentScripts[script].startArgs.replaceAll('$filename', filename);
       }
       return sentScripts
     },
+
+    // Sending a POST request to the server with the selectedScripts array to run selected scripts serverside
     onSubmit() {
       if (this.record === false) {
         this.num++;
@@ -134,7 +155,12 @@ export default {
         body: JSON.stringify(sentScripts)
       };
       sentScripts = []
-      fetch("http://localhost:3000/scripts", requestOptions);
+      let res = fetch("http://localhost:3000/scripts", requestOptions);
+      res
+        .then((response) => response.json())
+        .then(data => {
+          console.log(data[0])
+        })
     },
     // A method that is called when the user types in the sequence name. It takes the current project name,
     // the current index, the sequence name, and the take number and concatenates them together to form a

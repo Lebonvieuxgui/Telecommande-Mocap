@@ -66,11 +66,9 @@ export default {
       dialogFormVisible,
       activeScripts: [],
       loadedExecs: [],
-      selectedScript: null,
       selectedScripts: [],
       allSelected: false,
       show: true,
-      isIndeterminate: true,
       checkAll: false,
     };
   },
@@ -78,25 +76,30 @@ export default {
     let self = this;
 
     // Fetching data from the server and assigning it to the activeScripts and loadedExecs variables.
-    const scriptData = await fetch("http://localhost:3000/scripts");
+    const scriptData = fetch("http://localhost:3000/scripts");
+    scriptData
+      .then((response) => response.json())
+      .then((data) => {
+        this.activeScripts = data;
+        this.phoneIpGrabber(this.activeScripts);
+      })
     const execData = await fetch("http://localhost:3000/execs");
-    const newScriptData = await scriptData.json();
     const newExecData = await execData.json();
-    this.activeScripts = newScriptData;
     this.loadedExecs = newExecData;
-    this.phoneIpGrabber();
-    this.checkScriptExecutables()
+    //this.checkScriptExecutables()
   },
   methods: {
-    phoneIpGrabber() {
-      const Iphones = this.activeScripts.find(project => project.name === "LiveLinkFace");
-      let IphonesIP = Iphones.startTokens[1];
-      IphonesIP = IphonesIP.split("'")
+    // Parsing the IP of the database concerning the Iphones IP addresses in order to send only
+    // what we need to the Iphones.vue file.
+    phoneIpGrabber(scripts) {
+      const script = scripts.find(script => script.name === "LiveLinkFace");
+      let IphonesIP = script.startTokens[1];
+      IphonesIP = IphonesIP.split("=")
       IphonesIP.splice(0, 1)
-      IphonesIP.splice(IphonesIP.length - 1, 1)
       IphonesIP = IphonesIP[0].split("/")
       this.emitter.emit("IphonesIP", IphonesIP)
     },
+    
     checkScriptExecutables() {
       console.log("ehoo")
       let check = 0;
@@ -117,6 +120,8 @@ export default {
         }
       }
     },
+    // Emitting an event called scriptSelectionChange and passing the selectedScripts variable as a
+    // parameter.
     selectChange(script) {
       this.emitter.emit("scriptSelectionChange", this.selectedScripts);
     },

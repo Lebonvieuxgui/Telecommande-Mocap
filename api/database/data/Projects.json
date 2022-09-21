@@ -15,7 +15,7 @@
         "id": 3,
         "name": "msp",
         "currentIndex": 5,
-        "current": true
+        "current": false
     },
     {
         "id": 4,
@@ -39,7 +39,7 @@
         "id": 7,
         "name": "Schirkoa",
         "currentIndex": 863,
-        "current": false
+        "current": true
     },
     {
         "id": 8,
