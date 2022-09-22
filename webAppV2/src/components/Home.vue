@@ -139,10 +139,10 @@ export default {
     return {
       componentNames: [
         { name: "MainRemote", x: 0, y: 0, w: 100, h: 31, i: "0", },
+        { name: "ProjectsList", x: 191, y: 0, w: 36, h: 23, i: "1", },
         { name: "ScriptsList", x: 110, y: 0, w: 38, h: 27, i: "2", },
         { name: "Notifications", x: 153, y: 0, w: 33, h: 28, i: "3", },
-        { name: "ProjectsList", x: 191, y: 0, w: 36, h: 23, i: "1", },
-        { name: "IphonesList", x: 191, y: 0, w: 50, h: 50, i: "4", },
+        { name: "IphonesList", x: 191, y: 0, w: 29, h: 9, i: "4", },
       ],
       activeProjects: [],
       selectedProject: null,

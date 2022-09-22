@@ -1,6 +1,7 @@
 .record-button {
     margin-right: 3vw;
     margin-top: 1vw;
+    margin-left: -4vw
   }
   
   .not-recording {
@@ -19,6 +20,12 @@
   }
   .not-recording:active {
     background: #a30023;
+    color:white;
+    border-color:transparent;
+  }
+  .not-recording:disabled {
+    background: #cccccc;
+    box-shadow:  inset 5px 5px 10px #adadad, inset -5px -5px 10px #ebebeb;
     color:white;
     border-color:transparent;
   }

@@ -4,10 +4,8 @@
         <thead class="script-table-head">
           <tr>
             <th>
-              <span v-if="show">
                 <el-checkbox v-model="allSelected" @change="selectAll">
                 </el-checkbox>
-              </span>
               Iphones<el-button @click="this.show = !this.show" class="deploy-component-btn">
                 <span v-if="!show">
                   <el-icon>
@@ -61,7 +59,7 @@
         dialogFormVisible,
         selectedIphones: [],
         allSelected: true,
-        show: true,
+        show: false,
         checkAll: false,
       };
     },

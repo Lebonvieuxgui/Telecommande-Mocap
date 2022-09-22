@@ -10,10 +10,15 @@
     float: left;
     width: fit-content;
     height: fit-content;
-  }
+}
+
+.takeName {
+  width: max-content;
+}
 
 .file-info {
     margin-top: 1vh;
+    margin-left: -4vw;
     border-radius: 10px;
     background: var(--g);
     box-shadow: inset 5px 5px 10px #2a2a2a, inset -5px -5px 10px #363636;
@@ -25,4 +30,8 @@
     border-radius: 10px;
     background: var(--g);
     box-shadow: inset 5px 5px 10px #2a2a2a, inset -5px -5px 10px #363636;
+  }
+
+  .group1 {
+    margin-left: -4vw;
   }

@@ -1,7 +1,7 @@
 <template>
   <el-card shadow="hover" class="MainRemoteCard">
     <div class="card-header">Record</div>
-    <el-form :model="form" label-width="200px">
+    <el-form class="main-remote-form" :model="form" label-width="200px">
       <div class="file-info">
         <el-form-item label="File Name" style="margin-top: 30px">
           <div v-if="this.activeProject.id !== 0">{{ getFilename() }}</div>
@@ -11,15 +11,17 @@
       </div>
       <div class="sequence-group">
         <div class="group1">
-          <el-form-item label="Sequence" style="margin-top: 15px">
-            <el-input v-model="form.name" @change="getFilename" />
+          <el-form-item class="takename-item" label="Sequence" style="margin-top: 15px">
+            <el-input class="takeName" v-bind:placeholder="this.form.name === '' ? 'Please enter take name' : ''" v-bind:disabled="record ? true : false" v-model="form.name" @change="getFilename" />
           </el-form-item>
           <el-form-item label="Take" style="margin-top: 1vw;">
             <el-input-number v-model="num" :min="1" :max="99999" @change="handleChange" class="take" />
           </el-form-item>
         </div>
         <el-form-item class="record-button">
-          <el-button v-bind:class="record ? 'recording' : 'not-recording'" @click="(record = !record), onSubmit()">
+          <el-popover :visible="this.selectedScripts[0] === undefined && this.form.name != '' ? true : false" placement="top-start" content="Please select scripts" :width="155">
+            <template #reference>
+            <el-button v-bind:disabled="this.form.name === '' || this.selectedScripts[0] === undefined? true : false" v-bind:class="record ? 'recording' : 'not-recording'" @click="(record = !record), onSubmit()">
             <div v-if="record">
               <el-icon>
                 <VideoPause />
@@ -31,6 +33,8 @@
               </el-icon>
             </div>
           </el-button>
+        </template>
+        </el-popover>
         </el-form-item>
       </div>
     </el-form>
@@ -79,7 +83,8 @@ export default {
         current: false,
       },
       selectedScripts: [],
-      activeIps: []
+      activeIps: [],
+      visiblePop: false
     };
   },
 
