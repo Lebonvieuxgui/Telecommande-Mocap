@@ -110,6 +110,45 @@ export default {
   },
   created() {
 
+    this.emitter.on('resizeCard', (evt) => {
+      switch (evt) {
+        case "ProjectsList":
+          if (this.componentNames[1].h === 23) {
+            this.componentNames[1].h = 9;
+            this.componentNames[1].w = 28;
+          } else {
+            this.componentNames[1].h = 23;
+            this.componentNames[1].w = 36;
+          }
+          break
+        case "Notifications":
+          if (this.componentNames[3].h === 28) {
+            this.componentNames[3].h = 10;
+          } else {
+            this.componentNames[3].h = 28;
+          }
+          break
+        case "ScriptsList":
+          if (this.componentNames[2].h === 27) {
+            this.componentNames[2].h = 10;
+            this.componentNames[2].w = 25;
+          } else {
+            this.componentNames[2].h = 27;
+            this.componentNames[2].w = 38;
+          }
+          break
+        case "Iphones":
+          if (this.componentNames[4].h === 9) {
+            this.componentNames[4].h = 16;
+          } else {
+            this.componentNames[4].h = 9;
+          }
+          break
+          default:
+            break;
+      }
+    });
+
     // Listening for an event called "updateActiveProject" and when it is emitted, it sets the
     // selectedProject to the event.
     this.emitter.on("updateActiveProject", (evt) => {
@@ -173,7 +212,6 @@ export default {
     }
   },
   methods: {
-
     // A method that is called when the user clicks on the save button. It sends changes made to selected script to the server
     postChanges() {
       let newData = this.form.script;

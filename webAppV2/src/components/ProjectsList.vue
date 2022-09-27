@@ -4,7 +4,7 @@
       <thead class="project-table-head">
         <tr>
           <th>
-            Projects<el-button @click="this.show = !this.show" class="deploy-component-btn">
+            Projects<el-button @click="this.show = !this.show, sendResize()" class="deploy-component-btn">
               <span v-if="!show">
                 <el-icon>
                   <Plus />
@@ -136,6 +136,9 @@ export default {
   },
 
   methods: {
+    sendResize() {
+      this.emitter.emit("resizeCard", "ProjectsList");
+    },
     // This is a method that is called when the user selects a new project. It emits an event called
     // updateActiveProject. This event is listened for in the main.ts file.
     updateActiveProject() {

@@ -5,7 +5,7 @@
         <thead class="script-table-head">
           <tr>
             <th>
-              Notifications<el-button @click="this.show = !this.show" class="deploy-component-btn">
+              Notifications<el-button @click="this.show = !this.show, sendResize()" class="deploy-component-btn">
                 <span v-if="!show">
                   <el-icon>
                     <Plus />
@@ -75,6 +75,9 @@ export default {
     })
   },
   methods: {
+    sendResize() {
+      this.emitter.emit("resizeCard", "Notifications");
+    },
     receivedNotif(notifContent) {
       let newNotif = {
         name: evt.name,

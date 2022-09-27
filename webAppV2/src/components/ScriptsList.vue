@@ -8,7 +8,7 @@
               <el-checkbox v-model="allSelected" @change="selectAll">
               </el-checkbox>
             </span>
-            Scripts<el-button @click="this.show = !this.show" class="deploy-component-btn">
+            Scripts<el-button @click="this.show = !this.show, sendResize()" class="deploy-component-btn">
               <span v-if="!show">
                 <el-icon>
                   <Plus />
@@ -89,6 +89,9 @@ export default {
     //this.checkScriptExecutables()
   },
   methods: {
+    sendResize() {
+      this.emitter.emit("resizeCard", "ScriptsList");
+    },
     // Parsing the IP of the database concerning the Iphones IP addresses in order to send only
     // what we need to the Iphones.vue file.
     phoneIpGrabber(scripts) {
