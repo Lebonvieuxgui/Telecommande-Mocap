@@ -5,7 +5,7 @@
 # Télécommande Plateau
 
 Projet regroupant tous les éléments en lien avec le développement d'une application de lancement synchronisé d'outils de Motion Capture.
-Fonctionnant initialement sur RapsberryPi à base de scripts Python, il convient d'effectuer la migration du projet vers une application Desktop (C++) par soucis de sûreté et de portabilité.
+Fonctionnant initialement sur RapsberryPi à base de scripts Python, il convient d'effectuer la migration du projet vers une WebApp tournant en local sur n'importe quelle machine windows. 
 
 
 ## Contributions
