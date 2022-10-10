@@ -117,9 +117,9 @@
         ],
         "startTokens": [
             "--start",
-            "--ip=192.168.1.213/192.168.1.130",
+            "--ip=192.168.1.204/192.168.1.130",
             "--port=8000",
-            "--takename=\"$filename\""
+            "--takename=coucou"
         ],
         "stopTokens": [
             "--stop",
@@ -128,7 +128,7 @@
         ],
         "name": "LiveLinkFace",
         "executableName": "livelinkface.py",
-        "startArgs": "--start --ip=192.168.1.213/192.168.1.130 --port=8000 --takename=\"$filename\"",
+        "startArgs": "--start --ip=192.168.1.204/192.168.1.130 --port=8000 --takename=coucou",
         "stopArgs": "--stop --ip=192.168.1.213/192.168.1.130 --port=8000"
     },
     {

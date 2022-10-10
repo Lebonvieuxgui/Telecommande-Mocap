@@ -9,19 +9,20 @@ import OSC
 
 # Default OSC Port : 8000
 
+
 def launch(start, stop, ip, port, takename):
     ip.replace(' ', '')
     ip = ip.split('/')
 
     if start is True:
         for i in ip:
-	    c = OSC.OSCClient()
+            c = OSC.OSCClient()
             c.connect((i, port))
             oscmsg = OSC.OSCMessage("/RecordStart")
             oscmsg.append(takename)
             oscmsg.append(0)
             c.send(oscmsg)
-            print("Sent "  + str(oscmsg) + " to " + i)
+            print("Sent " + str(oscmsg) + " to " + i)
 
     if stop is True:
         for i in ip:
@@ -30,7 +31,7 @@ def launch(start, stop, ip, port, takename):
             oscmsg = OSC.OSCMessage("/RecordStop")
             oscmsg.append(0)
             c.send(oscmsg)
-            print("Sent "  + str(oscmsg) + " to " + i)
+            print("Sent " + str(oscmsg) + " to " + i)
 
 
 def usage():
@@ -43,7 +44,7 @@ Options:
     -t | --takename
     -h | --help(this message)
 Example: python livelinkface.py --start --ip='192.168.1.102' --port='8000' --takename='take001'""")
-    
+
 
 def main(argv):
     try:

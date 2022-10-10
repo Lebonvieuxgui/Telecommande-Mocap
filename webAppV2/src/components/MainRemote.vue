@@ -129,6 +129,7 @@ export default {
         if (sentScripts[script].name === 'LiveLinkFace') {
           sentScripts[script].startTokens[1] = '--ip=';
           sentScripts[script].stopTokens[1] = '--ip=';
+          console.log(this.activeIps)
           for (let ip in this.activeIps) {
             sentScripts[script].startTokens[1] += this.activeIps[ip];
             sentScripts[script].stopTokens[1] += this.activeIps[ip];

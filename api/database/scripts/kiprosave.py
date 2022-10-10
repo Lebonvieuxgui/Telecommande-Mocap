@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/python
 __author__ = "Support <support@aja.com>"
 __version__ = "rc1"
 __date__ = "Tue Mar 13 14:17:51 PDT 2012"
@@ -7,8 +7,9 @@ __license__ = "Proprietary"
 
 import sys
 import threading
-import urllib
-import urllib2
+import urllib.request
+import urllib.error
+import urllib.parse
 import json
 import re  # "now you have two problems" -- jwz
 
@@ -54,12 +55,12 @@ $ python
         try:
             self.firmwareVersion = self.__getFirmwareVersion(versionParam)
         except IOError as e:
-            print "IOError trying to communicate with target in BaseClient constructor"
-            print e
+            print ("IOError trying to communicate with target in BaseClient constructor")
+            print (e)
             raise UnresponsiveTargetError
         except Exception as e:
-            print "Error trying to communicate with target in BaseClient constructor"
-            print e
+            print ("Error trying to communicate with target in BaseClient constructor")
+            print (e)
             raise UnresponsiveTargetError
 
         if self.firmwareVersion < self.encodeVersion(supportedFirmwareVersion):
@@ -92,9 +93,9 @@ $ python
             'paramid': param_id,
             'value': value,
         }
-        noway = self.url + '/config?' + urllib.urlencode(data)
+        noway = self.url + '/config?' + urllib.parse.urlencode(data)
         try:
-            f = urllib.urlopen(noway)
+            f = urllib.request.urlopen(noway)
             result = (f.getcode(), f.read())
         except:
             raise
@@ -107,13 +108,13 @@ $ python
         result = (None, "")
         f = None
         try:
-            req = urllib2.Request(url=self.url + '/options?' + param_id)
-            f = urllib2.urlopen(req, timeout=5)
+            req = urllib.request.Request(url=self.url + '/options?' + param_id)
+            f = urllib.request.urlopen(req, timeout=5)
             result = (f.getcode(), f.read())
             f.close()
-        except urllib2.URLError as e:
+        except urllib.error.URLError as e:
             print("Error in getRawParameter()")
-            print e
+            print (e)
             raise UnresponsiveTargetError("There was an error: %r" % e)
         except:
             if f is not None:
@@ -130,6 +131,9 @@ $ python
         (code, response) = self.getRawParameter(param_id)
         result = (code, "")
         if code == self.__success:
+            response = json.dumps(response.decode('utf-8'))
+            response = response.replace('\\n', '')
+            response = json.loads(response)
             result = (code, (self.getSelected(response))['text'])
         return result
 
@@ -150,8 +154,11 @@ $ python
         """
         result = None
         try:
+            response = json.dumps(response.decode('utf-8'))
+            response = response.replace('\\n', '')
             result = json.loads(response)
         except:
+            response = response.replace('\\n', '')
             result = json.loads(self.cleanResponse(response))
         return result
 
@@ -204,7 +211,7 @@ $ python
         """
         This is primarily used to get timecode.
         """
-        events_stream = urllib2.urlopen(
+        events_stream = urllib.request.urlopen(
             self.url + "/json?action=wait_for_config_events&configid=0&connectionid=%s" % connectionid, timeout=5)
         if (events_stream.getcode() == self.__success):
             events_json = events_stream.read()
@@ -217,7 +224,7 @@ $ python
         This is only used for listening for event streams (primarily timecode).
         """
         result = None
-        connect_stream = urllib2.urlopen(
+        connect_stream = urllib.request.urlopen(
             self.url + "/json?action=connect&configid=0", timeout=5)
         if (connect_stream.getcode() == self.__success):
             connect_json = connect_stream.read()
@@ -243,7 +250,7 @@ $ python
             f = None
             try:
                 # It can take longer than 5 seconds to get all of the Descriptors.
-                f = urllib2.urlopen(
+                f = urllib.request.urlopen(
                     self.url + '/descriptors?paramid=*', timeout=30)
                 response = (f.getcode(), f.read())
                 f.close()
@@ -257,7 +264,7 @@ $ python
                     rawParams = self.asPython(response[1])
                     self.rawParametersCache = rawParams
                 except:
-                    print "Could not parse param list!"
+                    print ("Could not parse param list!")
                     raise
         return rawParams
 
@@ -315,6 +322,9 @@ $ python
         (code, response) = self.getRawParameter(param_id)
         if code == self.__success:
             stuff = self.asPython(response)
+            print("AAAAA")
+            stuff = json.loads(json.dumps(stuff))
+            print(stuff)
             for thing in stuff:
                 settings.append((thing['value'], thing['text']))
         return settings
@@ -397,11 +407,11 @@ $ python
             raise UnsupportedFirmwareVersionError
         except UnresponsiveTargetError as e:
             print("UnresponsiveTargetError in kipro Client constructor")
-            print e
+            print (e)
             raise UnresponsiveTargetError
         except Exception as e:
             print("Error in Client constructor")
-            print e
+            print (e)
             raise UnresponsiveTargetError
 
     def getTimecodeWithSynchronousCall(self):
@@ -520,7 +530,7 @@ $ python
         response = ""
         f = None
         try:
-            f = urllib2.urlopen(
+            f = urllib.request.urlopen(
                 self.url + '/clips?action=get_playlists', timeout=5)
             (code, response) = (f.getcode(), f.read())
             f.close()
@@ -561,30 +571,30 @@ $ python
 
 
 def usage():
-    print"""Usage: ./kipro [options]
+    print("""Usage: ./kipro [options]
 Options:
     --start
     --stop
     -u | --url(URL of Ki-Pro unit)
     -t | --takename
     -h | --help(this message)
-Example: ./kipro --start --url='192.168.1.102' --takename='take001'"""
+Example: ./kipro --start --url='192.168.1.102' --takename='take001'""")
 
 
 def demo(url, start, takename):
     """ Demonstrates how to use the client and grabs some useful information. """
     client = Client(url)
 
-    if start is True and takename is not "":
+    if start is True and takename != "":
         client.setParameter("eParamID_UseCustomClipName", 1)
         client.setParameter("eParamID_CustomClipName", takename)
 
     if start is True:
         client.record()
-        print "kipro has started"
+        print ("kipro has started")
     else:
         client.stop()
-        print "kipro has stopped"
+        print ("kipro has stopped")
 
 
 def main(argv):
@@ -617,9 +627,9 @@ def main(argv):
         usage()
         sys.exit()
     else:
-        print url
-        print start
-        print takename
+        print (url)
+        print (start)
+        print (takename)
         demo(url, start, takename)
 
 
@@ -664,9 +674,9 @@ class TimecodeListener(threading.Thread):
                     if (event["param_id"] == "eParamID_DisplayTimecode"):
                         self.__setTimecode(event["str_value"])
                         break
-            print "Listener stopping."
+            print ("Listener stopping.")
         else:
-            print "Failed to connect to", self.url
+            print ("Failed to connect to"), self.url
 
     def stop(self):
         """ Tell the listener to stop listening and the thread to exit. """

@@ -132,6 +132,7 @@ function executeScript(script) {
     for (tokens in script.stopTokens) {
       stopTokens.push(script.stopTokens[tokens]);
     }
+    console.log(startTokens)
     if (script.variables[0].value === false) {
       python = spawn("python", startTokens);
     } else {

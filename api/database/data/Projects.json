@@ -27,7 +27,7 @@
         "id": 5,
         "name": "test",
         "currentIndex": 93,
-        "current": false
+        "current": true
     },
     {
         "id": 6,
@@ -39,7 +39,7 @@
         "id": 7,
         "name": "Schirkoa",
         "currentIndex": 863,
-        "current": true
+        "current": false
     },
     {
         "id": 8,
