@@ -1,16 +1,21 @@
 {
   "name": "webappv2",
   "version": "0.0.0",
+  "main": "electron-main.js",
   "scripts": {
     "serve": "vite preview",
     "build": "vite build",
     "dev": "vite --port 29205",
-    "preview": "vite preview --port 4173"
+    "preview": "vite preview --port 4173",
+    "electron:start": "npm run build && electron .",
+    "electron:run": "electron .",
+    "electron:build": "electron-builder build"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.9",
     "@fortawesome/fontawesome-svg-core": "^6.1.2",
     "@mdi/font": "5.9.55",
+    "@vue/cli": "^5.0.8",
     "axios": "^0.27.2",
     "css-loader": "^2.1.0",
     "element-plus": "^2.2.14",
@@ -35,6 +40,8 @@
     "@iconify/json": "^2.1.97",
     "@vitejs/plugin-vue": "^3.0.3",
     "babel-plugin-component": "^1.1.1",
+    "electron-builder": "^23.6.0",
+    "electron": "18.2.0",
     "sass": "^1.27.0",
     "sass-loader": "^10.0.4",
     "unplugin-auto-import": "^0.11.2",
@@ -43,5 +50,12 @@
     "vite-plugin-vuetify": "^1.0.0-alpha.12",
     "vue-cli-plugin-element-plus": "~0.0.13",
     "vue-cli-plugin-vuetify": "~2.5.4"
+  },
+  "build": {
+    "files": ["**/*", "dist/**/*"],
+    "directories": {
+      "buildResources": "dist",
+      "output": "release"
+    }
   }
 }
