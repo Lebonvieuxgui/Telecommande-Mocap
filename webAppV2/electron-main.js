@@ -11,8 +11,9 @@ function createWindow() {
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
     },
+    icon: path.join(__dirname, "./dist/cropped-logo.ico")
   });
-  win.loadFile("C:/Users/elliot.janvier.SOLID/Documents/WORK/Telecommande-MoCap/webAppV2/dist/index.html");
+  win.loadFile("./dist/index.html");
   return win;
 }
 app.whenReady().then(() => {
