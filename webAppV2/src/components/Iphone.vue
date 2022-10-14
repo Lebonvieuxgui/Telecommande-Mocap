@@ -25,7 +25,7 @@
         <tbody>
           <el-checkbox-group v-model="selectedIphones">
             <el-checkbox v-for="IP in this.iphonesIP" :key="IP" :value="IP" :label="IP" class="CheckboxScripts"
-              @change="selectChange(IP)" :checked=true>
+              @change="selectChange(IP)" :checked=false>
               {{ IP }}
             </el-checkbox>
           </el-checkbox-group>
@@ -58,7 +58,7 @@ export default {
       formLabelWidth,
       dialogFormVisible,
       selectedIphones: [],
-      allSelected: true,
+      allSelected: false,
       show: false,
       checkAll: false,
     };
