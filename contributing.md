@@ -2,13 +2,6 @@
 
 Nous avons choisi d'imposer certaines règles aux contributions afin d'harmoniser les fichier uploadés et faciliter la production.
 
-### Branches
-
-Plusieurs branches ont été crées dans l'objectif de réduire les soucis de merge et de bugs:
-- Les branches contributeurs séparant le progrès des differents développeurs pour éviter les conflits.
-- La branche Dev visant à regrouper le travail des développeurs pour les phases de testing.
-- La branche Main contenant exclusivement les versions fonctionnelles du projet.
-
 ### Contributions
 
 #### Conditions des contributions
