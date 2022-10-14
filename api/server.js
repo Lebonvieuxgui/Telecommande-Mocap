@@ -9,6 +9,7 @@ const update = require("./database/utilities/updateFile.js");
 const execLoad = require("./database/utilities/loadExecs.js");
 const { spawn } = require("child_process");
 const { response } = require("express");
+var exec = require("child_process").execFile;
 
 /* Allowing the server to be accessed from the localhost. */
 var corsOptions = {
@@ -122,29 +123,44 @@ function executeScript(script) {
   return new Promise((resolve, reject) => {
     var startTokens = [];
     var stopTokens = [];
-    startTokens[0] = "./database/scripts/" + script.executableName;
-    stopTokens[0] = "./database/scripts/" + script.executableName;
+    if (script.executableName.endsWith(".py")) {
+      startTokens[0] = "./database/scripts/" + script.executableName;
+      stopTokens[0] = "./database/scripts/" + script.executableName;
+    }
     var dataToSend;
-    let python;
+    let run;
     for (tokens in script.startTokens) {
       startTokens.push(script.startTokens[tokens]);
     }
     for (tokens in script.stopTokens) {
       stopTokens.push(script.stopTokens[tokens]);
     }
-    console.log(startTokens)
+    console.log(startTokens);
     if (script.variables[0].value === false) {
-      python = spawn("python", startTokens);
+      if (script.executableName.endsWith(".py")) {
+        run = spawn("python", startTokens);
+      } else {
+        run = exec(script.executableName + ' ' + script.startArgs, function (err, data) {
+          console.log(err);
+          console.log(data.toString());
+        });
+      }
     } else {
-      python = spawn("python", stopTokens);
+      if (script.executableName.endsWith(".py")) {
+        run = spawn("python", stopTokens);
+      } else {
+        run = exec(script.executableName + ' ' + script.stopArgs, function (err, data) {
+          console.log(err);
+          console.log(data.toString());
+        });      }
     }
-    python.stdout.on("data", function (data) {
+    run.stdout.on("data", function (data) {
       dataToSend = data.toString();
     });
-    python.stderr.on("data", (data) => {
+    run.stderr.on("data", (data) => {
       reject(`child stderr:\n${data}`);
     });
-    python.on("close", (code) => {
+    run.on("close", (code) => {
       console.log(dataToSend);
       resolve(`child process close all stdio with code ${code}`);
     });
@@ -158,17 +174,17 @@ app.post("/scripts", (req, res) => {
   let returns = [];
   let errorStatus = 0;
   for (let script in req.body) {
-    toExecute.push({ func: executeScript, arg: req.body[script]});
+    toExecute.push({ func: executeScript, arg: req.body[script] });
   }
-  Promise.all(toExecute.map( (prom) => prom.func(prom.arg) ) )
+  Promise.all(toExecute.map((prom) => prom.func(prom.arg)))
     .then((result) => {
       console.log(result);
-      returns[0] += '/' + result;
+      returns[0] += "/" + result;
       res.status(200).json(returns);
     })
     .catch((error) => {
       console.log(error);
-      returns[1] += '/' + error;
+      returns[1] += "/" + error;
       errorStatus++;
       res.status(400).json(returns);
     });
