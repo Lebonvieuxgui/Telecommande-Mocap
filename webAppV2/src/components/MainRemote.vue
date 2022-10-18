@@ -117,6 +117,7 @@ export default {
       let filename = this.getFilename();
       for (let script in sentScripts) {
         sentScripts[script].variables[0].name = filename;
+        console.log(this.record)
         if (this.record === false) {
           sentScripts[script].variables[0].value = true;
         } else {

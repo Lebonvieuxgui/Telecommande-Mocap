@@ -1,6 +1,6 @@
 {
-  "name": "webappv2",
-  "version": "1.0.2",
+  "name": "webapp2",
+  "version": "1.0.3",
   "main": "electron-main.js",
   "author": {"name": "Elliot Janvier, Guillaume Lebreton", "email": "elliot.janvier@epitech.eu"},
   "publisher": "Guillot et Elliaume",

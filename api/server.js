@@ -135,24 +135,30 @@ function executeScript(script) {
     for (tokens in script.stopTokens) {
       stopTokens.push(script.stopTokens[tokens]);
     }
-    console.log(startTokens);
     if (script.variables[0].value === false) {
       if (script.executableName.endsWith(".py")) {
         run = spawn("python", startTokens);
       } else {
-        run = exec(script.executableName + ' ' + script.startArgs, function (err, data) {
-          console.log(err);
-          console.log(data.toString());
-        });
+        run = exec(
+          "./database/scripts/" + script.executableName, script.startTokens,
+          function (err, data) {
+            console.log(err);
+            console.log(data.toString());
+          }
+        );
       }
     } else {
       if (script.executableName.endsWith(".py")) {
         run = spawn("python", stopTokens);
       } else {
-        run = exec(script.executableName + ' ' + script.stopArgs, function (err, data) {
-          console.log(err);
-          console.log(data.toString());
-        });      }
+        run = exec(
+          "./database/scripts/" + script.executableName, script.stopTokens,
+          function (err, data) {
+            console.log(err);
+            console.log(data.toString());
+          }
+        );
+      }
     }
     run.stdout.on("data", function (data) {
       dataToSend = data.toString();

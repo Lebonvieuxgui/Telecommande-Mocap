@@ -127,7 +127,6 @@ export default {
       return this.activeNotifications
     },
     errorNotifications() {
-      console.log("prout")
       let count = this.errorNotificationsCount();
       if (count > 0) {
         this.badNotif = count;
