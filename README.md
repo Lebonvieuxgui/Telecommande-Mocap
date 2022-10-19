@@ -7,6 +7,27 @@
 Projet regroupant tous les éléments en lien avec le développement d'une application de lancement synchronisé d'outils de Motion Capture.
 Fonctionnant initialement sur RapsberryPi à base de scripts Python, il convient d'effectuer la migration du projet vers une WebApp tournant en local sur n'importe quelle machine windows. 
 
+# User Guide
+Guide d'utilisation etape par etape de la telecommande MoCap.
+## Installation
+ *Si vous souhaitez garder d'autres versions de Python sur votre machine, il vous suffit de sauter l'etape 2 et de placer le chemin de Python 2.7.10 au-dessus de celui des autres versions de Python dans la variable PATH*
+
+ 1. Dézipper l'archive a l'emplacement de votre choix
+ 2. Désinstaller toutes les versions de python présentes sur l'ordinateur (Si la version active est déjà 2.7.10, passer a l'étape 4)
+ 3. Installer Python 2.7.10 a l'aide de l'installeur dans le dossier, **en faisant bien attention a cocher "Add python.exe to PATH"**
+ 4. Installer la télécommande a l'aide du fichier webapp2Setup
+
+## Utilisation
+
+ 1. Lancer l'exécutable **webApp2Server.exe** et attendre environ ≃+-1 minute a peu pres
+ 2. Lancer l'application **webappv2** *(raccourci présent dans le menu démarrer)*
+ 3. **MoCapez!**
+
+## LiveLinkFace
+Si vous souhaitez utiliser le script LiveLinkFace, il faut cocher les iPhones que vous souhaitez utiliser dans la carte iPhones. **ATTENTION, ILS NE SONT PAS COCHÉS DE BASE**
+Vous pouvez a tout moment ajouter, retirer ou modifier des adresses d'iPhones dans le menu de modification du script LiveLinkFace. *Dans le cas ou les modifications n'apparaitraient pas directement, il suff
+it de rafraichir la page*
+
 
 ## Contributions
 
