@@ -19,14 +19,13 @@ Guide d'utilisation etape par etape de la telecommande MoCap.
 
 ## Utilisation
 
- 1. Lancer l'exécutable **webApp2Server.exe** et attendre environ ≃+-1 minute a peu pres
+ 1. Lancer l'exécutable **webApp2Server.exe** et attendre que l'invite de commande affiche 'OK". Vous pouvez maintenant réduire cette fenêtre.
  2. Lancer l'application **webappv2** *(raccourci présent dans le menu démarrer)*
  3. **MoCapez!**
 
 ## LiveLinkFace
 Si vous souhaitez utiliser le script LiveLinkFace, il faut cocher les iPhones que vous souhaitez utiliser dans la carte iPhones. **ATTENTION, ILS NE SONT PAS COCHÉS DE BASE**
-Vous pouvez a tout moment ajouter, retirer ou modifier des adresses d'iPhones dans le menu de modification du script LiveLinkFace. *Dans le cas ou les modifications n'apparaitraient pas directement, il suff
-it de rafraichir la page*
+Vous pouvez a tout moment ajouter, retirer ou modifier des adresses d'iPhones dans le menu de modification du script LiveLinkFace. *Dans le cas ou les modifications n'apparaitraient pas directement, il suffit de rafraichir la page*
 
 
 ## Contributions
