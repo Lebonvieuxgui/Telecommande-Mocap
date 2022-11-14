@@ -52,12 +52,13 @@ const handleChange = (value: number) => {
 
 // A function that formats the currentIndex to be a string with leading zeros.
 function indexFormatter(currentIndex) {
+  console.log('a')
   if (currentIndex < 10) {
-    currentIndex = "000" + currentIndex;
-  } else if (currentIndex < 100) {
     currentIndex = "00" + currentIndex;
-  } else if (currentIndex < 1000) {
+  } else if (currentIndex < 100) {
     currentIndex = "0" + currentIndex;
+  } else if (currentIndex < 1000) {
+    currentIndex = currentIndex;
   }
   return currentIndex;
 }
@@ -126,6 +127,9 @@ export default {
         for (let token in sentScripts[script].startTokens) {
           sentScripts[script].startTokens[token] = sentScripts[script].startTokens[token].replaceAll('$filename', filename);
         }
+        for (let token in sentScripts[script].stopTokens) {
+          sentScripts[script].stopTokens[token] = sentScripts[script].stopTokens[token].replaceAll('$filename', filename);
+        }
         // Adding the active IP addresses to the startTokens and stopTokens arrays if the script is named LiveLinkFace.
         if (sentScripts[script].name === 'LiveLinkFace') {
           sentScripts[script].startTokens[1] = '--ip=';
@@ -149,6 +153,8 @@ export default {
     onSubmit() {
       if (this.record === false) {
         this.num++;
+        this.activeProject.currentIndex++;
+        this.emitter.emit('incrementTotalTakes');
       }
       var sentScripts = JSON.parse(JSON.stringify(this.selectedScripts));
       sentScripts = this.filenameHandler(sentScripts);
@@ -166,7 +172,13 @@ export default {
       res
         .then((response) => response.json())
         .then(data => {
-          console.log(data[0])
+          let runStatus;
+          if (data[1] != null && this.record == false) {
+            this.record ? runStatus = {name: "Some scripts didn't start properly", type:"error", index: 0} : runStatus = {name: "Some scripts didn't stop properly", type:"error", index: 0}
+          } else {
+            this.record ? runStatus = {name: "Every script started properly", type:"success", index: 0} : runStatus = {name: "Every script stopped properly", type:"success", index: 0}
+          }
+          this.emitter.emit("errorNotification", runStatus);
         })
     },
     // A method that is called when the user types in the sequence name. It takes the current project name,
@@ -174,14 +186,15 @@ export default {
     // filename.
     getFilename() {
       let currentIndex = indexFormatter(this.activeProject.currentIndex);
-
+      let num = indexFormatter(this.num);
+      console.log(currentIndex);
       this.$globalFilename =
         this.activeProject.name +
         "_" +
         currentIndex +
         "_" +
         this.form.name +
-        this.num;
+        num;
       this.filename = this.$globalFilename;
       return this.filename;
     },

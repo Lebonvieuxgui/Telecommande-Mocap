@@ -1,6 +1,6 @@
 <template>
   <el-card shadow="hover" class="list-card">
-    <table ref="multipleTableRef">
+    <table ref="multipleTableRef" class="script-table">
       <thead class="script-table-head">
         <tr>
           <th>

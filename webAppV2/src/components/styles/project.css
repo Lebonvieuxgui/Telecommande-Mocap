@@ -14,7 +14,7 @@
 
 .project-select {
   color: red;
-  width: 7vw;
+  width: max-content;
   max-width: fit-content;
 }
 

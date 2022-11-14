@@ -59,7 +59,7 @@ export default {
       dialogFormVisible,
       selectedIphones: [],
       allSelected: false,
-      show: false,
+      show: true,
       checkAll: false,
     };
   },

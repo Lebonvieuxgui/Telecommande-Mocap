@@ -23,14 +23,13 @@
         <div v-if="show" class="script-table-body">
           <tbody style="display: flex; vertical-align: middle; position: relative">
             <ul>
-              <el-alert center show-icon effect="dark" v-for="notif in notifications" :type="notif.type" @close="deleteNotif(notif)">
+              <el-alert center show-icon effect="dark" v-for="notif in notifications" :type="notif.type" @close="deleteNotif(notif)" :style="width=100">
                 {{ notif.name }}
               </el-alert>
             </ul>
           </tbody>
         </div>
       </table>
-      <el-button @click="addNotif()"></el-button>
     </el-card>
   </el-badge>
 </template>
@@ -40,26 +39,6 @@ export default {
   data() {
     return {
       activeNotifications: [
-        {
-          name: "Notification 1",
-          type: "success",
-          index: "1"
-        },
-        {
-          name: "Notification 2",
-          type: "success",
-          index: "2"
-        },
-        {
-          name: "Notification 3",
-          type: "error",
-          index: "3"
-        },
-        {
-          name: "Notification 4",
-          type: "success",
-          index: "4"
-        },
       ],
       show: true,
       badgeType: "success",
@@ -78,7 +57,7 @@ export default {
     sendResize() {
       this.emitter.emit("resizeCard", "Notifications");
     },
-    receivedNotif(notifContent) {
+    receivedNotif(evt) {
       let newNotif = {
         name: evt.name,
         type: evt.type,

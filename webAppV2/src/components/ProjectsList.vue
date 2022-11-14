@@ -116,6 +116,21 @@ export default {
         this.selected = tmp2.id
       }
     })
+    this.emitter.on('incrementTotalTakes', () => {
+      this.num++;
+      this.activeProject.currentIndex++;
+      let data = [this.activeProject];
+      let requestOptions = {
+        method: 'PUT',
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "*/*",
+          "Connection": "keep-alive"
+        },
+        body: JSON.stringify(data)
+      };
+      fetch('http://localhost:3000/projects/', requestOptions);
+    })
   },
 
   // Fetching data from the server and setting the data to the activeProjects array.

@@ -158,7 +158,6 @@ export default {
     // Listening for an event called "openEditScript" and when it is emitted, it calls the function
     // openFileDialog.
     this.emitter.on("openEditScript", (evt) => {
-      console.log(evt);
       this.openFileDialog(evt);
     });
 
@@ -178,10 +177,10 @@ export default {
     return {
       componentNames: [
         { name: "MainRemote", x: 0, y: 0, w: 100, h: 31, i: "0", },
-        { name: "ProjectsList", x: 191, y: 0, w: 36, h: 23, i: "1", },
-        { name: "ScriptsList", x: 110, y: 0, w: 38, h: 27, i: "2", },
-        { name: "Notifications", x: 153, y: 0, w: 33, h: 28, i: "3", },
-        { name: "IphonesList", x: 191, y: 0, w: 29, h: 9, i: "4", },
+        { name: "ProjectsList", x: 6, y: 0, w: 36, h: 23, i: "1", },
+        { name: "ScriptsList", x: 5, y: 0, w: 38, h: 29, i: "2", },
+        { name: "Notifications", x: 47, y: 48, w: 33, h: 28, i: "3", },
+        { name: "IphonesList", x: 50, y: 0, w: 29, h: 16, i: "4", },
       ],
       activeProjects: [],
       selectedProject: null,

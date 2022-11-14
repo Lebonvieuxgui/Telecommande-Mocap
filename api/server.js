@@ -135,6 +135,7 @@ function executeScript(script) {
     for (tokens in script.stopTokens) {
       stopTokens.push(script.stopTokens[tokens]);
     }
+    console.log(script.stopTokens)
     if (script.variables[0].value === false) {
       if (script.executableName.endsWith(".py")) {
         run = spawn("python", startTokens);
@@ -248,3 +249,4 @@ app.get("/execs/:id", (req, res) => {
 
 /* Telling the server to listen for requests on port 3000. */
 app.listen(3000, () => {});
+console.log("OK")

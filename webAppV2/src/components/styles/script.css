@@ -22,3 +22,6 @@
   max-height: 13vw;
   overflow: scroll;
 }
+.script-table {
+  width: 500;
+}
